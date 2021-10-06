@@ -1,0 +1,11 @@
+.topBarPar {
+  color: white;
+  font-weight: 600;
+  margin-top: 0.423rem !important;
+  font-size: 1.2rem;
+}
+.topbar {
+  height: 50px;
+  background-color: red;
+  background-image: linear-gradient(to right, #2d71ff, #ff74f1);
+}

@@ -1,0 +1,27 @@
+.imgslideLeft {
+  border-radius: 30px;
+  width: 600px !important;
+  height: 600px !important;
+}
+
+.rightHeroVid {
+  position: relative;
+  border-radius: 30px !important;
+}
+.rightVideo {
+  border-radius: 20px !important;
+}
+.rightVideo:hover {
+  transform: scale(1.1);
+}
+
+.col-lg-4 {
+  margin-top: 12px !important;
+}
+
+.rightHeroVid p {
+  position: absolute;
+  left: 12%;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
