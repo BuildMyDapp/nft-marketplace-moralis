@@ -1,15 +1,17 @@
 .imgslideLeft {
   border-radius: 30px;
   width: 600px !important;
-  height: 600px !important;
+  height: 700px !important;
 }
 
 .rightHeroVid {
   position: relative;
   border-radius: 30px !important;
+  border: none !important;
 }
 .rightVideo {
   border-radius: 20px !important;
+  border: none !important;
 }
 .rightVideo:hover {
   transform: scale(1.1);
@@ -24,4 +26,9 @@
   left: 12%;
   font-size: 1.4rem;
   font-weight: 600;
+}
+
+.card {
+  border-radius: 20px !important;
+  border: none !important;
 }
