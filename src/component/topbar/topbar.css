@@ -6,6 +6,6 @@
 }
 .topbar {
   height: 50px;
-  background-color: red;
+  /* background-color: red; */
   background-image: linear-gradient(to right, #2d71ff, #ff74f1);
 }

@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "antd/dist/antd.css";
+import "antd/dist/antd.min.js";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
-import "antd/dist/antd.css";
 
 ReactDOM.render(
   <React.StrictMode>
