@@ -1,0 +1,16 @@
+.NftSearch {
+  margin-top: 7rem;
+}
+.ant-input {
+}
+.ant-input-affix-wrapper {
+  border-top-left-radius: 50px !important;
+  border-bottom-left-radius: 50px !important;
+}
+.ant-input-group-addon button {
+  background-color: blueviolet;
+  border: none;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  /* display: block !important; */
+}

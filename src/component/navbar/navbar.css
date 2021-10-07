@@ -2,36 +2,66 @@
   color: black;
   font-size: 24px !important;
   font-weight: 800;
-  /* margin-left: 4rem; */
 }
 
-.productSearch {
-  padding: 8px !important;
-  /* border: 0.00001px solid white !important; */
+.searchIcon {
+  display: none;
+}
+
+@media (max-width: 974px) {
+  .nav-link.active {
+    color: black !important;
+    /* background-image: !important; */
+    background-image: linear-gradient(to right, #fff, #fff);
+    width: 115px;
+    padding-left: 8px !important;
+    /* background-color: green !important; */
+    /* border-radius: 20px; */
+    /* color: white !important; */
+  }
+  .navbar-brand {
+    /* margin-left: -5rem !important; */
+  }
+}
+
+.searchBtn {
+  padding: 8px;
   border: none !important;
   border-radius: 15px !important;
-  background-color: #121212 !important;
   margin-left: 4rem !important;
 }
 
-.productSearch .ant-input {
-  background-color: #121212 !important;
-}
 .ant-input::placeholder {
-  color: #ffffff80 !important;
+  color: #a3a3a3 !important;
   font-size: 1.1rem;
   font-weight: 600;
 }
-/* .ant-input[value]::placeholder {
-  color: green !important;
-} */
+.searchBtn {
+  /* width: 40rem !important; */
+}
+
+.searchBtn .ant-input-group-addon button {
+  display: none !important;
+}
+
+.searchBtn .ant-input-affix-wrapper {
+  border-radius: 25px !important;
+  padding: 12px;
+  background-color: #04040512;
+}
+
 .site-form-item-icon {
   color: darkgrey !important;
   margin-right: 0.5rem;
   font-size: 1rem !important;
 }
+.searchBtn .ant-input {
+  background-color: #ededed !important;
+  color: none !important;
+}
 input[value] {
-  color: white !important;
+  color: black !important;
+  font-size: 1rem;
 }
 .ant-input-affix-wrapper-focused {
   border: 0.5px solid #8e9191 !important;
@@ -41,20 +71,53 @@ input[value] {
   /* padding-left: 0.3rem; */
 }
 .nav-item .nav-link {
-  font-size: 15px !important;
-  color: #a3a3a3 !important;
+  font-size: 17px !important;
+  color: black !important;
   font-weight: 700;
-  padding-right: 1.5rem !important;
+  padding-right: 1srem !important;
 }
 
 .nav-item .nav-link:hover {
-  color: black !important;
+  color: #2d71ff !important;
+  /* border-bottom: 1px solid #2d71ff; */
+  transition: all 0.2s linear;
+  /* border-radius: 15px; */
+}
+.navbar {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .nav-link.active {
+  /* color: black !important; */
+  background-image: linear-gradient(to right, #2d71ff, #ff74f1);
+  border-radius: 20px;
+  color: white !important;
+}
+.nav-link.active:hover {
   color: black !important;
 }
 
 .navbar-toggler-icon {
   color: white !important;
+}
+
+/* New Navbar */
+
+form .search-data {
+  border-top-left-radius: 50px !important;
+  border-bottom-left-radius: 50px !important;
+}
+nav form button {
+  /* padding: 0 15px;
+  color: #fff;
+  font-size: 17px;
+  background: #26d63b;
+  border: none;
+  border-radius: 2px; */
+  width: 80px;
+  border: none;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  cursor: pointer;
+  transition: 0.2s all;
 }
