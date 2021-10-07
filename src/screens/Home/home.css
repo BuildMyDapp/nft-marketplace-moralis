@@ -1,7 +1,28 @@
 .imgslideLeft {
   border-radius: 30px;
-  width: 600px !important;
-  height: 700px !important;
+
+  width: 100% !important;
+}
+/* Media Query To Make Image Responsive */
+@media (min-width: 750px) {
+  .imgslideLeft {
+    height: 450px !important;
+  }
+}
+@media (min-width: 995px) {
+  .imgslideLeft {
+    height: 450px !important;
+  }
+}
+@media (min-width: 1200px) {
+  .imgslideLeft {
+    height: 600px !important;
+  }
+}
+@media (min-width: 1400px) {
+  .imgslideLeft {
+    height: 750px !important;
+  }
 }
 
 .rightHeroVid {
@@ -31,4 +52,5 @@
 .card {
   border-radius: 20px !important;
   border: none !important;
+  margin: 20px 0;
 }

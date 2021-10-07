@@ -2,17 +2,20 @@ import "./App.css";
 import Navbar from "./component/navbar/Navbar";
 import Topbar from "./component/topbar/Topbar";
 import HomeScreen from "./screens/Home/HomeScreen";
-import ExploreSection from "./screens/Explore/ExploreSection";
+import ListNft from "./screens/ListNft/ListNft";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 function App() {
   return (
-    <div className="">
+    <Router>
       <Topbar />
       <Navbar />
+
       <div className="container">
-        <HomeScreen />
-        <ExploreSection />
+        <Route path="/" exact component={HomeScreen} />
+        <Route path="/list-nft" component={ListNft} />
       </div>
-    </div>
+    </Router>
   );
 }
 

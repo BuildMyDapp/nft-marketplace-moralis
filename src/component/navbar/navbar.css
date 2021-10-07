@@ -1,5 +1,5 @@
 .navbar-brand {
-  color: white;
+  color: black;
   font-size: 24px !important;
   font-weight: 800;
   /* margin-left: 4rem; */
@@ -42,13 +42,17 @@ input[value] {
 }
 .nav-item .nav-link {
   font-size: 15px !important;
-  color: #ffffff80 !important;
+  color: #a3a3a3 !important;
   font-weight: 700;
   padding-right: 1.5rem !important;
 }
 
+.nav-item .nav-link:hover {
+  color: black !important;
+}
+
 .nav-link.active {
-  color: white !important;
+  color: black !important;
 }
 
 .navbar-toggler-icon {

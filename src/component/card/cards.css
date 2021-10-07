@@ -1,4 +1,4 @@
-/* .mainCardIcon {
+.mainCardIcon {
   display: flex;
   margin-left: -2rem;
 }
@@ -42,8 +42,7 @@
   color: darkgray !important;
 }
 
- 
-.cardImg {
+card Styling .cardImg {
   border-radius: 15px;
 }
 
@@ -83,4 +82,4 @@
 
 .ant-card {
   margin: 10px 00px !important;
-} */
+}
