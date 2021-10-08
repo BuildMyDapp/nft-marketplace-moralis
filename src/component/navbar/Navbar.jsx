@@ -86,7 +86,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg  ">
         <div className="container-fluid">
           <a className=" ms-lg-4 navbar-brand" href="#">
-            Rarible
+            Marketplace
           </a>
           <button
             className="navbar-toggler"
