@@ -2,7 +2,7 @@ import React from "react";
 import "./navbar.css";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   const { Search } = Input;
@@ -106,31 +106,31 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 ms-sm-auto mb-lg-0 ms-auto">
               <li className="nav-item ">
-              <Link to="/">
-                <a className="nav-link active">
-                  Marketplace
+                <Link to="/">
+                  <a className="nav-link active">
+                    Marketplace
                 </a>
                 </Link>
               </li>
               <li className="nav-item">
-              <Link to="/list_nft">
-                <a className="nav-link navL" >
-                  List Nft
+                <Link to="/list_nft">
+                  <a className="nav-link navL" >
+                    List Nft
                 </a>
                 </Link>
 
               </li>
               <li className="nav-item">
-              <Link to="/balance">
-                <a className="nav-link navL" >
-                  Balance Page
+                <Link to="/balance">
+                  <a className="nav-link navL" >
+                    Balance Page
                 </a>
                 </Link>
               </li>
               <li className="nav-item">
-              <Link to="/my_collection">
-                <a className="nav-link navL" >
-                  front-money Nft
+                <Link to="/my_collection">
+                  <a className="nav-link navL" >
+                    front-money Nft
                 </a>
                 </Link>
               </li>
