@@ -11,11 +11,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { create } from 'ipfs-http-client';
 import ImageUploader from 'react-images-upload';
 import 'dotenv'
-import { useStore } from '../../ontext/GlobalState';
+import { useStore } from '../../../context/GlobalState';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import { Toast } from 'primereact/toast';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import 'dotenv'
 // import Buffer from 'buffer';
 import Loader from "react-loader-spinner";
@@ -34,24 +34,83 @@ const validationSchema = yup.object({
     //   .min(8, 'supply should be of minimum 8 characters length')
     //   .required('supply is required'),
   });
-  const projectId = '1y6NPTldmnx1PJsqCnifwbXFiwC'
-  const projectSecret = '1ce02a7f1ea84ac21a4e4017f786d7f3'
-  // const buffer = new Buffer.from(projectId + ':' + projectSecret).toString('base64')
-  const auth =
-    'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64')
+  // const projectId = '1y6NPTldmnx1PJsqCnifwbXFiwC'
+  // const projectSecret = '1ce02a7f1ea84ac21a4e4017f786d7f3'
+  // // const buffer = new Buffer.from(projectId + ':' + projectSecret).toString('base64')
+  // const auth =
+  //   'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64')
   
-  // const client = create('https://infura-ipfs.io:5001/api/v0')
-  const client = create({
-    host: 'ipfs.infura.io',
-    port: 5001,
-    protocol: 'https',
-    headers: {
-      authorization: auth
-    }
-  })
+  // // const client = create('https://infura-ipfs.io:5001/api/v0')
+  // const client = create({
+  //   host: 'ipfs.infura.io',
+  //   port: 5001,
+  //   protocol: 'https',
+  //   headers: {
+  //     authorization: auth
+  //   }
+  // })
+  const client = create('https://ipfs.infura.io:5001/api/v0')
 
   
 const PublishNftForm = () => {
+
+  const toast = useRef(null);
+  const [{ web3, accounts, apiUrl }, dispatch] = useStore();
+  const [openWalletModal, setOpenWalletModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  // const navigate = useNavigate();
+
+  const handleOpenWalletModal = () => {
+    setOpenWalletModal(true);
+  };
+
+  const handleCloseWalletModal = () => {
+    setOpenWalletModal(false);
+  };
+
+  const [image_uri, updateFileUrl] = useState(``);
+  async function onChange(e) {
+    const file = e
+
+    console.log("eee", e)
+    try {
+      setLoading(false);
+      const added = await client.add(file)
+      console.log("added", added, image_uri)
+      const url = `https://infura-ipfs.io/ipfs/${added.path}`
+      updateFileUrl(url);
+      setLoading(true);
+
+      // return file;
+    } catch (error) {
+      console.log('Error uploading file: ', error)
+    }
+  }
+  console.log("apiUrl", apiUrl)
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      description: '',
+      supply: '',
+      category: "",
+      external_link: "",
+      price: "",
+      creator_name: "",
+      user_email: ""
+
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      // values.imgUri = fileUrl
+      console.log("values", values)
+      // handlePublishNft(values.name, values.description, "1",
+      //   values.price * 10 ** 18, values.external_link, accounts[0], values.creator_name, values.supply, values.user_email,
+      //   values.category
+      // )
+    },
+  });
     return (
         <div>
               <div className="p-form-cont">

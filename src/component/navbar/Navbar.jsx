@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const Navbar = () => {
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
-
+  
   return (
     <div>
       {/* <nav className="mx-3 mt-1 navbar navbar-expand-lg    ">
@@ -131,6 +131,13 @@ const Navbar = () => {
                 <Link to="/my_collection">
                   <a className="nav-link navL" >
                     front-money Nft
+                </a>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/publish_nft">
+                  <a className="nav-link navL" >
+                    Publish Nft
                 </a>
                 </Link>
               </li>

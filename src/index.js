@@ -7,11 +7,12 @@ import "antd/dist/antd.css";
 import "antd/dist/antd.min.js";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import { GlobalProvider } from './context/GlobalState';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <GlobalProvider>
+  <App />
+</GlobalProvider>,
   document.getElementById("root")
 );
 

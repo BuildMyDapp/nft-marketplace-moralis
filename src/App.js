@@ -5,6 +5,8 @@ import HomeScreen from "./screens/Home/HomeScreen";
 import ListNft from "./screens/ListNft/ListNft";
 import FrontMoney from "./screens/Frontmoney/FrontMoney";
 import Balance from "./screens/Balance/Balance";
+import PublishNft from "./screens/publishNft/index";
+
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -19,6 +21,8 @@ function App() {
         <Route path="/list_nft" component={ListNft} />
         <Route path="/my_collection" component={FrontMoney} />
         <Route path="/balance" component={Balance} />
+        <Route path="/publish_nft" component={PublishNft} />
+
       </div>
     </Router>
   );
