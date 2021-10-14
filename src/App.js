@@ -16,8 +16,8 @@ function App() {
 
       <div className="container">
         <Route path="/" exact component={HomeScreen} />
-        <Route path="/list-nft" component={ListNft} />
-        <Route path="/front-money" component={FrontMoney} />
+        <Route path="/list_nft" component={ListNft} />
+        <Route path="/my_collection" component={FrontMoney} />
         <Route path="/balance" component={Balance} />
       </div>
     </Router>
