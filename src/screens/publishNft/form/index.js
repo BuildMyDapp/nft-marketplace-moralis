@@ -138,24 +138,7 @@ const PublishNftForm = () => {
               className="p-form-input"
 
             />
-            <p>
-              <b>*Email: </b>
-              Your Email
-                </p>
-            <TextField
-              fullWidth
-              id="user_email"
-              name="user_email"
-              label="*Email"
-              variant="filled"
-              color="secondary"
-              type="email"
-              value={formik.values.user_email}
-              helperText={`${formik.values.user_email.length}/${50}`}
-              onChange={formik.handleChange}
-              className="p-form-input"
-
-            />
+     
             <p>
               <b>*Description: </b>
               The description will be included on the item's detail page underneath its image.
@@ -191,47 +174,7 @@ const PublishNftForm = () => {
               className="p-form-input"
             />
 
-            <p>
-              <b>*Supply: </b>
-              The number of copies that can be minted.
-              </p>
-            <TextField
-              fullWidth
-              variant="filled"
-              color="secondary"
-              id="supply"
-              name="supply"
-              label="*Supply"
-              value={formik.values.supply}
-              helperText={`${formik.values.supply.length}/${3}`}
-              onChange={formik.handleChange}
-              className="p-form-input"
-            // error={formik.touched.email && Boolean(formik.errors.email)}
-            // helperText={formik.touched.email && formik.errors.email}
-            />
-            {
-              Math.sign(formik.values.price) != "-1" ?
-                "" : <span style={{ color: "red" }}>Value Should be positive</span>
-            }
-            <p>
-              <b>*Price: </b>
-              Price of your NFT.
-              </p>
-            <TextField
-              fullWidth
-              id="filled-secondary"
-              name="price"
-              label="*Price"
-              variant="filled"
-              color="secondary"
-              value={formik.values.price}
-              helperText={`${formik.values.price.length}/${10}`}
-              onChange={formik.handleChange}
-              className="p-form-input"
-
-
-            />
-
+         
             <p>
               <b>*Creator Name: </b>
               Creator name of this NFT.
@@ -250,43 +193,9 @@ const PublishNftForm = () => {
             // error={formik.touched.email && Boolean(formik.errors.email)}
             // helperText={formik.touched.email && formik.errors.email}
             />
-            <p>
-              <b>*Category: </b>
-              This is the Category where your item will appear.
-                                   </p>
+
             <InputLabel htmlFor="age-native-helper">Category</InputLabel>
-            <NativeSelect
-              value={formik.values.category}
-              onChange={formik.handleChange}
-              className="p-form-input-category"
-
-              inputProps={{
-                name: 'category',
-                id: 'age-native-helper',
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={"Education"}>Education</option>
-              <option value={"Medical"}>Medical</option>
-              <option value={"Memorial"}>Memorial</option>
-              <option value={"Emergency"}>Emergency</option>
-              <option value={"Nonprofit"}>Nonprofit</option>
-              <option value={"Animals"}>Animals</option>
-              <option value={"Environment"}>Environment</option>
-              <option value={"Business"}>Business</option>
-              <option value={"Community"}>Community</option>
-              <option value={"Competition"}>Competition </option>
-              <option value={"Creative"}>Creative</option>
-              <option value={"Event"}>Event</option>
-              <option value={"Faith"}>Faith </option>
-              <option value={"Family"}>Family </option>
-              <option value={"Sports"}>Sports </option>
-              <option value={"Travel"}>Travel </option>
-              <option value={"Volunteer"}>Volunteer </option>
-              <option value={"Wishes"}>Wishes </option>
-
-
-            </NativeSelect>
+         
             <div className="p-form-image-cont">
               <ImageUploader
                 withIcon={true}

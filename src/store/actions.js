@@ -32,6 +32,12 @@ export const addEthereumAccounts = (accounts) => {
         payload: accounts
     };
 }
+export const setupColletralContract = (contractColletral) => {
+    return {
+        type: 'ADD_COLLETRAL_CONTRACT',
+        payload: contractColletral
+    };
+}
 export const makeApiTrigger = (apiTrigger) => {
     return {
         type: 'API_TRIGGER',

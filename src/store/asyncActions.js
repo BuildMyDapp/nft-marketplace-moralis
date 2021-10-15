@@ -1,7 +1,8 @@
-import { setupWeb3, setupContract, setNetwork, addEthereumAccounts, addTransaction, web3LoadingError } from "./actions";
+import { setupWeb3, setupContract, setupColletralContract,setNetwork, addEthereumAccounts, addTransaction, web3LoadingError } from "./actions";
 import Web3 from "web3";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from '../contract/ABI';
+import { ERC721_ABI, ERC721_ADDRESS } from '../contract/ERC721';
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import { COLLECTRAL_ABI, COLLECTRAL_ADDRESS } from '../contract/colletral';
 
 export const loadBlockchain = async (dispatch) => {
     try {
@@ -18,8 +19,10 @@ export const loadBlockchain = async (dispatch) => {
             const web3 = new Web3(Web3.givenProvider);
             await Web3.givenProvider.enable();
             dispatch(setupWeb3(web3));
-            const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+            const contract = new web3.eth.Contract(ERC721_ABI, ERC721_ADDRESS);
             dispatch(setupContract(contract));
+            const contractColletral = new web3.eth.Contract(COLLECTRAL_ABI, COLLECTRAL_ADDRESS);
+            dispatch(setupColletralContract(contractColletral))
             const accounts = await web3.eth.getAccounts();
             dispatch(addEthereumAccounts(accounts));
             console.log("contract", contract);
@@ -56,7 +59,7 @@ export const loadWalletConnect = async (dispatch) => {
 
             // await Web3.givenProvider.enable();
             dispatch(setupWeb3(web3));
-            const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+            const contract = new web3.eth.Contract(ERC721_ABI, ERC721_ADDRESS);
             console.log("this is for contract", contract)
 
             dispatch(setupContract(contract));

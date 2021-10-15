@@ -10,6 +10,7 @@ const initialState = {
     accounts: [],
     contract: null,
     apiTrigger: false,
+    colletralContract: null,
     apiUrl: process.env.REACT_APP_API_LIVE_URL,
     web3LoadingErrorMessage: "",
     web3Loadded: false

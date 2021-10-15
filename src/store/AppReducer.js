@@ -32,6 +32,11 @@ export default (state, action) => {
           ...state,
           apiTrigger: action.payload
         }
+        case 'ADD_COLLETRAL_CONTRACT':
+        return {
+          ...state,
+          colletralContract: action.payload
+        }
         case 'SETUP_PROVIDER':
         return {
           ...state,
