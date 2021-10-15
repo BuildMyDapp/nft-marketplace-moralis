@@ -130,18 +130,17 @@ export const buyNft = async (web3, contract, accounts, amount, id, handleNavigat
 
 
 export const mintNft = async (web3, contract, accounts, amount, token_id,
-    data, apiUrl, notify, handleLoading, handleNavigate, handleApiTrigger) => {
-    console.log("before transaction", contract, accounts, amount, token_id, data);
+     apiUrl ,name) => {
+    console.log("before transaction", contract, accounts, amount, token_id, name);
 
     try {
         const price = amount.toString();
         let txhashes;
         let tokenIdSupply = await contract.methods
             .totalSupply().call();
-        let tId = tokenIdSupply;
 
         const receipt = await contract.methods
-            .mint(token_id, price, data.supply)
+            .mint(token_id, price, 1)
             .send({ from: accounts[0] }).on('transactionHash', async (hash) => {
                 // ...
                 console.log('Received txHash: ', hash);
@@ -152,29 +151,20 @@ export const mintNft = async (web3, contract, accounts, amount, token_id,
                 const myHeaders = new Headers();
                 myHeaders.append('Content-Type', 'application/json');
                 myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
-                let token_id = --tokenIdSupply
+                let token_id = tokenIdSupply
                 console.log("tokenIdSupply", tokenIdSupply)
-                let id = data.id;
-                let tx_hash = "true";
-                let token_address = "true"
-                let name = data.name;
-                let owner = accounts[0];
+                
                 const requestOptions = {
                     method: 'POST',
                     headers: myHeaders,
                     body: JSON.stringify({
-                        id, tx_hash, token_address,
-                        token_id, name,owner
+                        token_id, name
                     })
                 };
                 let submitForm = await fetch(`${apiUrl}update_nft_mint_status`, requestOptions)
                 submitForm = await submitForm.json();
                 console.log("submitForm", submitForm);
-                handleApiTrigger()
-                handleLoading()
-                // toast.current.show({ severity: 'success', summary: 'Success!', detail: 'Mint Successfully!' });
-                notify()
-                handleNavigate()
+            
             })
         console.log("receiptsss", receipt)
         return receipt;

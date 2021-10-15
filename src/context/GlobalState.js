@@ -11,8 +11,8 @@ const initialState = {
     contract: null,
     apiTrigger: false,
     colletralContract: null,
-    apiUrl: process.env.REACT_APP_API_LIVE_URL,
-    web3LoadingErrorMessage: "",
+    apiUrl: "http://localhost:8080/",
+    web3LoadingErrorMessage: "http://localhost:8080/",
     web3Loadded: false
 }
 

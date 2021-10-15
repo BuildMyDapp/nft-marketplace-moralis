@@ -9,7 +9,30 @@ import video5 from "../../images/5.webm";
 import Cards from "../../component/card/Cards";
 import data from "../dummy";
 import "./home.css";
+// import { useMoralisWeb3Api } from "react-moralis";
+import  Moralis from 'moralis';
 const HomeScreen = () => {
+  // const { authenticate, isAuthenticated, user } = useMoralis();
+  // const Web3Api = useMoralisWeb3Api()
+
+  React.useEffect(async()=>{
+const serverUrl = "https://zrgs9ntgp1xg.grandmoralis.com:2053/server";
+const appId = "ehjdZ3SrJBc8mvotS9zIVpJ3ERQ1hXLolg9rJo2d";
+// let t = await Moralis.start({serverUrl,appId})
+Moralis.initialize("ehjdZ3SrJBc8mvotS9zIVpJ3ERQ1hXLolg9rJo2d", "", "sO7IJveC1wGqenEclYGF8He9mdAqkqBASB34l5bp");
+Moralis.serverURL = 'https://zrgs9ntgp1xg.grandmoralis.com:2053/server'    
+// console.log("lol",t)
+    Moralis.authenticate().then(async function (user) {
+      console.log("etherAddress",user.get("ethAddress"))
+      const users = Moralis.User.current();
+      console.log("user",users)
+      Moralis.start({ serverUrl, appId });
+      const options = { address: "0x6e1283f5f1689f264d6e89956b8653a07ccad100ee05df283c8ee679f87765ce", chain: "rinkeby" };
+      const metaData = await Moralis.Web3API.token.getNFTMetadata(options);
+      console.log("metaData",metaData)
+
+    })
+},[])
   return (
     <>
       <div className="row mt-5">

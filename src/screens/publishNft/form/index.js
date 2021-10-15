@@ -20,6 +20,8 @@ import 'dotenv'
 // import Buffer from 'buffer';
 import Loader from "react-loader-spinner";
 
+import { mintNft } from '../../../store/asyncActions';
+
 const validationSchema = yup.object({
     // name: yup
     //   .string('Enter your name')
@@ -55,7 +57,7 @@ const validationSchema = yup.object({
 const PublishNftForm = () => {
 
   const toast = useRef(null);
-  const [{ web3, accounts, apiUrl }, dispatch] = useStore();
+  const [{ web3, accounts, apiUrl,contract }, dispatch] = useStore();
   const [openWalletModal, setOpenWalletModal] = useState(false);
   const [loading, setLoading] = useState(true);
   // const navigate = useNavigate();
@@ -92,12 +94,8 @@ const PublishNftForm = () => {
     initialValues: {
       name: '',
       description: '',
-      supply: '',
-      category: "",
       external_link: "",
-      price: "",
       creator_name: "",
-      user_email: ""
 
     },
     validationSchema: validationSchema,
@@ -105,12 +103,50 @@ const PublishNftForm = () => {
       // alert(JSON.stringify(values, null, 2));
       // values.imgUri = fileUrl
       console.log("values", values)
-      // handlePublishNft(values.name, values.description, "1",
-      //   values.price * 10 ** 18, values.external_link, accounts[0], values.creator_name, values.supply, values.user_email,
-      //   values.category
-      // )
+      handlePublishNft(values.name, values.description,
+     values.external_link
+      )
     },
   });
+
+  const handlePublishNft = async (name, description, external_link) => {
+    try {
+      // let m = await getBalance(web3,accounts);
+      // let slug = cryptoRandomString({ length: 10, type: 'alphanumeric' });
+      const myHeaders = new Headers();
+
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+
+      const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+
+        body: JSON.stringify({
+          name, description, image_uri, external_link
+      
+        })
+      };
+      let submitForm = await fetch(`${apiUrl}save_nft`, requestOptions)
+      submitForm = await submitForm.json();
+      if (submitForm && submitForm.status == false) throw submitForm.error;
+      let tokenIdSupply = await contract.methods
+      .totalSupply().call();
+      let tId = tokenIdSupply;
+
+      let token_uri = `${apiUrl}get_nft?token_id=${tId}`
+    
+
+      await mintNft(web3,contract,accounts,100,token_uri,apiUrl,name)
+      console.log("submitForkm", submitForm)
+    
+    }
+    catch (error) {
+      // toast.current.show({ severity: 'error', summary: 'Failed!', detail: error });
+  
+      console.log("submitForm", error)
+    }
+  }
     return (
         <div>
               <div className="p-form-cont">
@@ -194,7 +230,6 @@ const PublishNftForm = () => {
             // helperText={formik.touched.email && formik.errors.email}
             />
 
-            <InputLabel htmlFor="age-native-helper">Category</InputLabel>
          
             <div className="p-form-image-cont">
               <ImageUploader
