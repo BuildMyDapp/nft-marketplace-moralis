@@ -178,10 +178,7 @@ export const mintNft = async (web3, contract, accounts, amount, token_id,
 export const changePriceAsync = async (web3, contract, accounts, amount, id,
     data, handleApiTrigger, apiUrl) => {
     console.log("before transaction", contract, accounts, amount, id);
-
     try {
-
-
         const price = amount.toString();
         const receipt = await contract.methods
             .changePrice(price, id)
@@ -215,8 +212,8 @@ export const changePriceAsync = async (web3, contract, accounts, amount, id,
 }
 
 
-export const liftNftColetralAsync = async (web3, colletralContract,accounts, price, paymentPeriod,
-    downPaymentPeriod, duration, nftContractAddress, currencyAddress, handleApiTrigger,apiUrl,data) => {
+export const liftNftColetralAsync = async (web3, colletralContract, accounts, price, paymentPeriod,
+    downPaymentPeriod, duration, nftContractAddress, currencyAddress, handleApiTrigger, apiUrl, data) => {
     try {
         let id = await colletralContract.methods.tradeCounter();
         let receipt = await colletralContract.methods.listNftCollateral(id, price, paymentPeriod,
@@ -246,27 +243,83 @@ export const liftNftColetralAsync = async (web3, colletralContract,accounts, pri
 }
 
 
-export const unLiftNftColetralAsync = async (web3, colletralContract,accounts, tradeId, handleApiTrigger,apiUrl,data) => {
+export const unLiftNftColetralAsync = async (web3, colletralContract,
+    accounts, tradeId, handleApiTrigger, apiUrl, data) => {
     try {
-        let id = await colletralContract.methods.tradeCounter();
         let receipt = await colletralContract.methods.unListNftCollateral(tradeId).on('transactionHash', async (hash) => {
-                let id = data.id
-                let ownerAddress = accounts[0];
-                const myHeaders = new Headers();
-                myHeaders.append('Content-Type', 'application/json');
-                myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
-                // const requestOptions = {
-                //     method: 'POST',
-                //     headers: myHeaders,
-                //     body: JSON.stringify({
-                //         id, ownerAddress, price
-                //     })
-                // };
-                // let fetchNftData = await fetch(`${apiUrl}resell_nft`, requestOptions);
-                handleApiTrigger()
+            let id = data.id
+            let ownerAddress = accounts[0];
+            const myHeaders = new Headers();
+            myHeaders.append('Content-Type', 'application/json');
+            myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: myHeaders,
+            //     body: JSON.stringify({
+            //         id, ownerAddress, price
+            //     })
+            // };
+            // let fetchNftData = await fetch(`${apiUrl}resell_nft`, requestOptions);
+            handleApiTrigger()
 
-                // fetchNftData = await fetchNftData.json();
-            });
+            // fetchNftData = await fetchNftData.json();
+        });
+    }
+    catch (error) {
+        console.log("error", error)
+    }
+}
+
+
+export const payDownPaymentAndFeeAsync = async (web3, colletralContract,
+    accounts, tradeId, handleApiTrigger, apiUrl, data, price, currencyAddress) => {
+    try {
+        let receipt = await colletralContract.methods.payDownPaymentAndFee(tradeId, currencyAddress, price).on('transactionHash', async (hash) => {
+            let id = data.id
+            let ownerAddress = accounts[0];
+            const myHeaders = new Headers();
+            myHeaders.append('Content-Type', 'application/json');
+            myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: myHeaders,
+            //     body: JSON.stringify({
+            //         id, ownerAddress, price
+            //     })
+            // };
+            // let fetchNftData = await fetch(`${apiUrl}resell_nft`, requestOptions);
+            handleApiTrigger()
+
+            // fetchNftData = await fetchNftData.json();
+        });
+    }
+    catch (error) {
+        console.log("error", error)
+    }
+}
+
+
+export const claimNftAsync = async (web3, colletralContract,
+    accounts, tradeId, handleApiTrigger, apiUrl, data) => {
+    try {
+        let receipt = await colletralContract.methods.claimNft(tradeId).on('transactionHash', async (hash) => {
+            let id = data.id
+            let ownerAddress = accounts[0];
+            const myHeaders = new Headers();
+            myHeaders.append('Content-Type', 'application/json');
+            myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: myHeaders,
+            //     body: JSON.stringify({
+            //         id, ownerAddress, price
+            //     })
+            // };
+            // let fetchNftData = await fetch(`${apiUrl}resell_nft`, requestOptions);
+            handleApiTrigger()
+
+            // fetchNftData = await fetchNftData.json();
+        });
     }
     catch (error) {
         console.log("error", error)
