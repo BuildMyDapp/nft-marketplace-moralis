@@ -38,9 +38,8 @@ const Cards = ({ item }) => {
             <ul className="mainCardIcon">
               <li>
                 <Tooltip
-                  // className="tooltipsImg"
                   placement="topLeft"
-                  title={"Collection :" + item?.creator_name}
+                  title={"Collection :" + item ?.creator_name}
                   overlayInnerStyle={{
                     width: "170px",
                     background: "white",
@@ -59,7 +58,7 @@ const Cards = ({ item }) => {
               <li>
                 <Tooltip
                   placement="topLeft"
-                  title={"Owner :" + item?.creator_name}
+                  title={"Owner :" + item ?.creator_name}
                   overlayInnerStyle={{
                     width: "170px",
                     background: "white",
@@ -71,27 +70,10 @@ const Cards = ({ item }) => {
                     fontWeight: "650",
                   }}
                 >
-                  <img src={cardIcon2} alt="" height="35" />
+                  <img src={item.image} alt="" height="35" />
                 </Tooltip>
               </li>
-              <li>
-                <Tooltip
-                  placement="topLeft"
-                  title={"Collection :" + item?.creator_name}
-                  overlayInnerStyle={{
-                    width: "170px",
-                    background: "white",
-                    color: "black",
-                    // marginBottom: "0.5rem",
-                    borderRadius: "5px",
-                    textAlign: "center",
-                    fontSize: "1rem",
-                    fontWeight: "650",
-                  }}
-                >
-                  <img src={cardIcon3} alt="" height="35" />
-                </Tooltip>
-              </li>
+
             </ul>
           </>
         }
@@ -106,10 +88,10 @@ const Cards = ({ item }) => {
           </Dropdown>
         }
       >
-        <img alt="card " className="cardImg" src={cardImg} />
-        <p className="cardName">#15881- {item?.description}</p>
+        <img alt="card " className="cardImg" src={item.image} />
+        <p className="cardName">#15881- {item ?.description}</p>
         <p className="etherium">
-          {item?.price} ETH <span>1/1</span>
+          {item ?.price} ETH <span>1/1</span>
         </p>
         <div className="placeBid">
           <p>Place a bid</p>

@@ -57,7 +57,7 @@ const validationSchema = yup.object({
 const PublishNftForm = () => {
 
   const toast = useRef(null);
-  const [{ web3, accounts, apiUrl,contract }, dispatch] = useStore();
+  const [{ web3, accounts, apiUrl,contract,colletralContract }, dispatch] = useStore();
   const [openWalletModal, setOpenWalletModal] = useState(false);
   const [loading, setLoading] = useState(true);
   // const navigate = useNavigate();
@@ -74,7 +74,7 @@ const PublishNftForm = () => {
   async function onChange(e) {
     const file = e
 
-    console.log("eee", e)
+    console.log("colletralContract", colletralContract)
     try {
       setLoading(false);
       const added = await client.add(file)

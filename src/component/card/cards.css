@@ -44,8 +44,14 @@
 
 card Styling .cardImg {
   border-radius: 15px;
+  height: 40px !important
 }
 
+.cardImg {
+  border-radius: 15px;
+  /* height: 150px !important */
+  width: 100%
+}
 .ant-card-head {
   border-bottom: none !important;
 }
