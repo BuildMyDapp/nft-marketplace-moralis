@@ -6,7 +6,7 @@ import video3 from "../../images/3.webm";
 import video4 from "../../images/4.webm";
 import video5 from "../../images/5.webm";
 // import ExploreSection from "../Explore/ExploreSection";
-import Cards from "../../component/card/Cards";
+import Cards from "./card/Cards";
 import data from "../dummy";
 import "./home.css";
 import { useStore } from '../../context/GlobalState';

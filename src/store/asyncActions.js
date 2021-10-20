@@ -227,7 +227,7 @@ export const liftNftColetralAsync = async (web3, colletralContract, accounts, am
 export const unLiftNftColetralAsync = async (web3, colletralContract,
     accounts, tradeId, handleApiTrigger, apiUrl, data) => {
     try {
-        let receipt = await colletralContract.methods.unListNftCollateral(tradeId).on('transactionHash', async (hash) => {
+        let receipt = await colletralContract.methods.unListNftCollateral(tradeId).send({ from: accounts[0] }).on('transactionHash', async (hash) => {
             let id = data.id
             let ownerAddress = accounts[0];
             const myHeaders = new Headers();
@@ -253,23 +253,24 @@ export const unLiftNftColetralAsync = async (web3, colletralContract,
 
 
 export const payDownPaymentAndFeeAsync = async (web3, colletralContract,
-    accounts, tradeId, handleApiTrigger, apiUrl, data, price, currencyAddress) => {
+    accounts, tradeId, apiUrl, data, price, currencyAddress) => {
     try {
-        let receipt = await colletralContract.methods.payDownPaymentAndFee(tradeId, currencyAddress, price).on('transactionHash', async (hash) => {
-            let id = data.id
-            let ownerAddress = accounts[0];
-            const myHeaders = new Headers();
-            myHeaders.append('Content-Type', 'application/json');
-            myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+        let receipt = await colletralContract.methods.payDownPaymentAndFee(tradeId, currencyAddress, price).send({ from: accounts[0] }).on('transactionHash', async (hash) => {
+            // let id = data.id
+            // console.log("data",data)
+            // let dp_address = accounts[0];
+            // const myHeaders = new Headers();
+            // myHeaders.append('Content-Type', 'application/json');
+            // myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
             // const requestOptions = {
             //     method: 'POST',
             //     headers: myHeaders,
             //     body: JSON.stringify({
-            //         id, ownerAddress, price
+            //         id, dp_address, price
             //     })
             // };
-            // let fetchNftData = await fetch(`${apiUrl}resell_nft`, requestOptions);
-            handleApiTrigger()
+            // let fetchNftData = await fetch(`${apiUrl}pay_down_payment`, requestOptions);
+ 
 
             // fetchNftData = await fetchNftData.json();
         });
