@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Cards from "../../component/card/Cards";
+import Cards from "./card/Cards";
 import data from "../dummy";
 import Moralis from 'moralis';
 

@@ -213,7 +213,7 @@ export const changePriceAsync = async (web3, contract, accounts, amount, id,
 
 
 export const liftNftColetralAsync = async (web3, colletralContract, accounts, price, paymentPeriod,
-    downPaymentPeriod, duration, nftContractAddress, currencyAddress, handleApiTrigger, apiUrl, data) => {
+    downPaymentPeriod, duration, nftContractAddress, currencyAddress, apiUrl, data) => {
     try {
         let id = await colletralContract.methods.tradeCounter();
         let receipt = await colletralContract.methods.listNftCollateral(id, price, paymentPeriod,
@@ -232,7 +232,6 @@ export const liftNftColetralAsync = async (web3, colletralContract, accounts, pr
                 //     })
                 // };
                 // let fetchNftData = await fetch(`${apiUrl}resell_nft`, requestOptions);
-                handleApiTrigger()
 
                 // fetchNftData = await fetchNftData.json();
             });

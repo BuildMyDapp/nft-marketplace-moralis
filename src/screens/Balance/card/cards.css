@@ -1,0 +1,91 @@
+.mainCardIcon {
+  display: flex;
+  margin-left: -2rem;
+}
+
+.mainCardIcon > li {
+  margin-right: -5px;
+  list-style: none;
+}
+.mainCardIcon > li > img {
+  border-radius: 20px;
+}
+
+.mainCardIcon > li:hover {
+  transform: translateY(-5px);
+}
+
+.tooltipsImg {
+  background-color: white !important;
+  color: black !important;
+}
+
+.ant-tooltip-arrow {
+  display: none !important;
+}
+
+.cardMenu {
+  background-color: white;
+  width: 200px;
+  color: black;
+  margin-bottom: 2rem;
+}
+.cardMenu .cardMenuItem {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.menuIcon {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: darkgray !important;
+}
+
+card Styling .cardImg {
+  border-radius: 15px;
+  height: 40px !important
+}
+
+.cardImg {
+  border-radius: 15px;
+  /* height: 150px !important */
+  width: 100%
+}
+.ant-card-head {
+  border-bottom: none !important;
+}
+.ant-card-bordered {
+  border-radius: 20px !important;
+}
+
+.cardName {
+  font-weight: 800 !important;
+  color: black;
+  margin-top: 1rem;
+}
+
+.etherium {
+  font-weight: 800 !important;
+  color: black;
+  margin-top: 1rem;
+}
+
+.placeBid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.placeBid p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #00a0ff;
+}
+
+.etherium span {
+  color: gray !important;
+}
+
+.ant-card {
+  margin: 10px 00px !important;
+}
