@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import slide1 from "../../images/slide1.png";
 import video1 from "../../images/1.webm";
 import video2 from "../../images/2.webm";
@@ -9,12 +9,26 @@ import video5 from "../../images/5.webm";
 import Cards from "../../component/card/Cards";
 import data from "../dummy";
 import "./home.css";
+import { useStore } from '../../context/GlobalState';
+
 // import { useMoralisWeb3Api } from "react-moralis";
 import Moralis from 'moralis';
 const HomeScreen = () => {
   // const { authenticate, isAuthenticated, user } = useMoralis();
   // const Web3Api = useMoralisWeb3Api()
+  const [{ web3, accounts, apiUrl,contract,colletralContract }, dispatch] = useStore();
 
+  const [NFTData, setNFTData] = useState([])
+
+  useEffect(async () => {
+
+    let fetchNftData = await fetch(`${apiUrl}list_nfts`)
+    fetchNftData = await fetchNftData.json();
+    fetchNftData = fetchNftData ? fetchNftData.data : fetchNftData;
+    fetchNftData = fetchNftData.reverse()
+    setNFTData(fetchNftData)
+
+  }, [])
   return (
     <>
       <div className="row mt-5">
@@ -101,7 +115,7 @@ const HomeScreen = () => {
         </div>
       </div>
       <div className="row my-5">
-        {data.map((item) => (
+        {NFTData.map((item) => (
           <div className="col-md-4 col-lg-3 col-sm-6">
             <Cards item={item} />
           </div>

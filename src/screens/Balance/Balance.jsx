@@ -30,9 +30,12 @@ const Balance = () => {
       console.log("metaData", metaData)
       let nftArray = []
       // for(let i = 0;  i < usernftBalance.length; i++) {
-      for (let i = 0; i < usernftBalance.length; i++) {
+      for (let i = 2; i < 10; i++) {
         let fetchData = await fetch(usernftBalance[i].token_uri)
         fetchData = await fetchData.json();
+        fetchData['token_id'] = usernftBalance[i].token_id
+        fetchData['token_address'] = usernftBalance[i].token_address
+
         nftArray.push(fetchData);
         console.log("dsdsad", fetchData)
       

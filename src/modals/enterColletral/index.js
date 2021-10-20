@@ -5,7 +5,7 @@ import { Fade, Modal, Backdrop } from "@material-ui/core";
 import { useStore } from "../../context/GlobalState";
 import TextField from "@material-ui/core/TextField";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { changePriceAsync, liftNftColetralAsync } from '../../store/asyncActions';
+import {liftNftColetralAsync } from '../../store/asyncActions';
 import { makeApiTrigger } from '../../store/actions';
 import 'dotenv'
 
@@ -62,13 +62,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const EnterColletral = ({ data, handleCloseResellModal, nftContractAddress }) => {
+const EnterColletral = ({ data, handleCloseResellModal }) => {
   const [qrCode, setQrCode] = useState(false);
   const [{ web3, accounts, contract, apiUrl, apiTrigger, colletralContract }, dispatch] = useStore();
   let [etherAmount, setEtheAmount] = useState("");
   let [paymentPeriod, setPaymentPeriod] = useState("");
   let [downPaymentPeriod, setDownPaymentPeriod] = useState("");
   let [duration, setDuration] = useState("");
+  let [currencyAddress, setcurrencyAddress] = useState("");
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
@@ -80,14 +81,17 @@ const EnterColletral = ({ data, handleCloseResellModal, nftContractAddress }) =>
   const onSubmit = async () => {
     let ownerAddress = accounts[0];
     let price = etherAmount * 10e17
+    price = price.toString()
     console.log("price", typeof price)
+    console.log("onSubmitcolletralContract",colletralContract.methods)
     try {
       let handleApiTrigger = () => {
         dispatch(makeApiTrigger(!apiTrigger));
         handleCloseResellModal()
       }
       let receipt = await liftNftColetralAsync(web3, colletralContract, accounts, price, paymentPeriod,
-        downPaymentPeriod, duration, apiUrl, data)
+        downPaymentPeriod, duration, currencyAddress, apiUrl, data)
+        // if(receipt) {}
 
 
     }
@@ -97,11 +101,13 @@ const EnterColletral = ({ data, handleCloseResellModal, nftContractAddress }) =>
     }
   };
 
+  console.log("datadatadatadata",data)
+
 
 
 
   return (
-    <div>
+    <div> 
       <>
         <div style={modalStyle} className={classes.paper}>
           <h1 style={{ color: "black" }}>Collateral your NFT </h1>
@@ -123,6 +129,9 @@ const EnterColletral = ({ data, handleCloseResellModal, nftContractAddress }) =>
           />
           <TextField type="number"
             className="text-field" placeholder="duration" label="duration" type="number" value={duration} onChange={(e) => setDuration(e.target.value)}
+          />
+               <TextField type="number"
+            className="text-field" placeholder="duration" label="duration" type="number" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
           />
           <button className="buy-btn" onClick={onSubmit}
           >
