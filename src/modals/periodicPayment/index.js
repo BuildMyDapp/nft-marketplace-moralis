@@ -5,7 +5,7 @@ import { Fade, Modal, Backdrop } from "@material-ui/core";
 import { useStore } from "../../context/GlobalState";
 import TextField from "@material-ui/core/TextField";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import {liftNftColetralAsync } from '../../store/asyncActions';
+import { sendPeriodicPaymentAsync, claimNftAsync } from '../../store/asyncActions';
 import { makeApiTrigger } from '../../store/actions';
 import 'dotenv'
 
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const EnterColletral = ({ data, handleCloseResellModal }) => {
+const SentPeriodicPayment = ({ data, handleCloseResellModal }) => {
   const [qrCode, setQrCode] = useState(false);
   const [{ web3, accounts, contract, apiUrl, apiTrigger, colletralContract }, dispatch] = useStore();
   let [etherAmount, setEtheAmount] = useState("");
@@ -83,15 +83,17 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
     let price = etherAmount * 10e17
     price = price.toString()
     console.log("price", typeof price)
-    console.log("onSubmitcolletralContract",colletralContract.methods)
+    console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
       let handleApiTrigger = () => {
         dispatch(makeApiTrigger(!apiTrigger));
         handleCloseResellModal()
       }
-      let receipt = await liftNftColetralAsync(web3, colletralContract, accounts, price, paymentPeriod,
-        downPaymentPeriod, duration, currencyAddress, apiUrl, data)
-        // if(receipt) {}
+
+      let receipt = await sendPeriodicPaymentAsync(web3, colletralContract, accounts, data.nfT_colletral_id, apiUrl,
+        data, price, data.currency_address
+      )
+      // if(receipt) {}
 
 
     }
@@ -101,16 +103,17 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
     }
   };
 
-  console.log("datadatadatadata",data)
+  console.log("datadatadatadata", data)
+
 
 
 
 
   return (
-    <div> 
+    <div>
       <>
         <div style={modalStyle} className={classes.paper}>
-          <h1 style={{ color: "black" }}>Collateral your NFT </h1>
+          <h1 style={{ color: "black" }}>SEND PERIODIC PAYMENT </h1>
 
           {
             Math.sign(etherAmount) != "-1" ?
@@ -121,23 +124,11 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
           <TextField type="number"
             className="text-field" placeholder="Amount" label="Enter Amount" type="number" value={etherAmount} onChange={(e) => setEtheAmount(e.target.value)}
           />
-          <TextField type="number"
-            className="text-field" placeholder="paymentPeriod" label="paymentPeriod" type="number" value={paymentPeriod} onChange={(e) => setPaymentPeriod(e.target.value)}
-          />
-          <TextField type="number"
-            className="text-field" placeholder="downPaymentPeriod" label="downPaymentPeriod" type="number" value={downPaymentPeriod} onChange={(e) => setDownPaymentPeriod(e.target.value)}
-          />
-          <TextField type="number"
-            className="text-field" placeholder="duration" label="duration" type="number" value={duration} onChange={(e) => setDuration(e.target.value)}
-          />
-               <TextField type="text"
-            className="text-field" placeholder="currencyAddress" label="currencyAddress" type="text" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
-          />
           <button className="buy-btn" onClick={onSubmit}
           >
-            Collateral now
+            sent periodic payment
             </button>
-
+   
 
         </div>
       </>
@@ -146,4 +137,4 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
   );
 };
 
-export default EnterColletral;
+export default SentPeriodicPayment;

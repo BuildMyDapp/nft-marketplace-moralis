@@ -5,17 +5,13 @@ import video2 from "../../images/2.webm";
 import video3 from "../../images/3.webm";
 import video4 from "../../images/4.webm";
 import video5 from "../../images/5.webm";
-// import ExploreSection from "../Explore/ExploreSection";
 import Cards from "./card/Cards";
 import data from "../dummy";
 import "./home.css";
 import { useStore } from '../../context/GlobalState';
 
-// import { useMoralisWeb3Api } from "react-moralis";
 import Moralis from 'moralis';
 const HomeScreen = () => {
-  // const { authenticate, isAuthenticated, user } = useMoralis();
-  // const Web3Api = useMoralisWeb3Api()
   const [{ web3, accounts, apiUrl,contract,colletralContract }, dispatch] = useStore();
 
   const [NFTData, setNFTData] = useState([])

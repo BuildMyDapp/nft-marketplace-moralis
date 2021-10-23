@@ -113,14 +113,14 @@ const Navbar = () => {
                 </a>
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/list_nft">
                   <a className="nav-link navL" >
                     List Nft
                 </a>
                 </Link>
 
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link to="/balance">
                   <a className="nav-link navL" >

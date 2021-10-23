@@ -1,0 +1,59 @@
+.buy-btn{
+    text-align: center;
+    justify-content: center;
+    /* display: flex */
+    border-radius: 30px;
+    width: 300px;
+    height: 60px;
+    margin-top: 20px;
+
+    margin-bottom: 8x;
+    background: #a54c7d;
+    box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.25), inset -2px -2px 6px rgba(149, 3, 3, 0.25);
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+        color: white;
+    font-weight: 700;
+    font-size: 19px;
+}
+
+.modal-img{
+    width: 100px 
+}
+.buy-btn-disabled{
+    text-align: center;
+    justify-content: center;
+    /* display: flex */
+    border-radius: 30px;
+    width: 300px;
+    height: 60px;
+    margin-top: 20px;
+    margin-bottom: 8x;
+    background: #a54c7d;
+    box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.25), inset -2px -2px 6px rgba(149, 3, 3, 0.25);
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+        color: white;
+    font-weight: 700;
+    font-size: 19px; 
+    /* cursor: not-allowed */
+}
+.text-field{
+    width: 100%;
+}
+
+.modal-rotate {
+    animation: rotation 4s infinite linear;
+    /* width: 360px !important;  */
+  }
+  /* .img-container{
+    margin-top: 19px;
+} */
+  @keyframes rotation {
+    from {
+      transform: rotateX(0deg);
+    }
+    to {
+      transform: rotateY(359deg);
+    }
+  }

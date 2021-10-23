@@ -181,7 +181,7 @@ export const liftNftColetralAsync = async (web3, colletralContract, accounts, am
     downPaymentPeriod, duration, currency_address, apiUrl, NFTdata) => {
     try {
         let nfT_colletral_id = await colletralContract.methods.tradeCounter().call();
-        console.log("nfT_colletral_id", nfT_colletral_id)
+        console.log("currency_address", currency_address)
         let token_id = NFTdata.token_id;
         let token_address = NFTdata.token_address;
         console.log("token_address", token_address, "token_id", token_id)
@@ -270,7 +270,7 @@ export const payDownPaymentAndFeeAsync = async (web3, colletralContract,
             //     })
             // };
             // let fetchNftData = await fetch(`${apiUrl}pay_down_payment`, requestOptions);
- 
+
 
             // fetchNftData = await fetchNftData.json();
         });
@@ -281,11 +281,11 @@ export const payDownPaymentAndFeeAsync = async (web3, colletralContract,
 }
 
 
-export const sendPeriodicPayment = async (web3, colletralContract,
-    accounts, tradeId, handleApiTrigger, apiUrl, data, price, currencyAddress) => {
+export const sendPeriodicPaymentAsync = async (web3, colletralContract,
+    accounts, tradeId, handleApiTrigger, apiUrl, price, currencyAddress) => {
+        console.log()
     try {
-        let receipt = await colletralContract.methods.sendPeriodicPayment(tradeId, currencyAddress, price).on('transactionHash', async (hash) => {
-            let id = data.id
+        let receipt = await colletralContract.methods.sendPeriodicPayment(tradeId, currencyAddress, price).send({ from: accounts[0] }).on('transactionHash', async (hash) => {
             let ownerAddress = accounts[0];
             const myHeaders = new Headers();
             myHeaders.append('Content-Type', 'application/json');
@@ -298,7 +298,6 @@ export const sendPeriodicPayment = async (web3, colletralContract,
             //     })
             // };
             // let fetchNftData = await fetch(`${apiUrl}resell_nft`, requestOptions);
-            handleApiTrigger()
 
             // fetchNftData = await fetchNftData.json();
         });
@@ -311,9 +310,9 @@ export const sendPeriodicPayment = async (web3, colletralContract,
 
 
 export const claimNftAsync = async (web3, colletralContract,
-    accounts, tradeId, handleApiTrigger, apiUrl, data) => {
+    accounts, tradeId, apiUrl, data) => {
     try {
-        let receipt = await colletralContract.methods.claimNft(tradeId).on('transactionHash', async (hash) => {
+        let receipt = await colletralContract.methods.claimNft(tradeId).send({ from: accounts[0] }).on('transactionHash', async (hash) => {
             let id = data.id
             let ownerAddress = accounts[0];
             const myHeaders = new Headers();
@@ -327,7 +326,6 @@ export const claimNftAsync = async (web3, colletralContract,
             //     })
             // };
             // let fetchNftData = await fetch(`${apiUrl}resell_nft`, requestOptions);
-            handleApiTrigger()
 
             // fetchNftData = await fetchNftData.json();
         });
