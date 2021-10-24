@@ -4,12 +4,15 @@ import { Card, Menu, Dropdown, Tooltip } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import cardIcon from "../../../images/cardIcon.gif";
 import Modal from '@material-ui/core/Modal';
+import cardImg2 from "../../../images/cardImg2.webp";
+import ApproveToken from '../../../modals/approve'
 
 import EnterDownPayment from '../../../modals/downPayment/index';
 
 const Cards = ({ item }) => {
   console.log(item);
   const [resellModal, setResellModal] = useState(false);
+  const [approveModal, setapproveModal] = useState(false);
 
   const menu = () => (
     <>
@@ -41,6 +44,14 @@ const Cards = ({ item }) => {
     setResellModal(false);
   };
 
+
+  const handleApproveOpen = () => {
+    setapproveModal(true);
+  };
+
+  const handleApproveClose = () => {
+    setapproveModal(false);
+  };
   return (
     <>
       <Card
@@ -99,20 +110,15 @@ const Cards = ({ item }) => {
           </Dropdown>
         }
       >
-        <img alt="card " className="cardImg" src={item.image} />
+        <img alt="card " className="cardImg" src={cardImg2} />
         <p className="cardName">#15881- {item ?.description}</p>
-        <p className="etherium">
-          {item ?.price} ETH <span>1/1</span>
-        </p>
-        <div className="placeBid">
-          <p>Place a bid</p>
-          <div>
-            <i className="fas fa-heart"></i>&nbsp; 6
+      
+      
+        <div className="nft-btn-cont">
+            <button className="nft-approve" onClick={handleApproveOpen}>Approve</button>
+        
+            <button className="nft-approve" onClick={handleOpenResellModal}>DownPayment</button>
           </div>
-          <div>
-            <button onClick={handleOpenResellModal}>DownPayment</button>
-          </div>
-        </div>
       </Card>
       <Modal
         open={resellModal}
@@ -121,6 +127,15 @@ const Cards = ({ item }) => {
         aria-describedby="simple-modal-description"
       >
         <EnterDownPayment data={item} handleCloseResellModal={handleCloseResellModal} />
+      </Modal>
+
+      <Modal
+        open={approveModal}
+        onClose={handleApproveClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <ApproveToken data={item} />
       </Modal>
     </>
   );

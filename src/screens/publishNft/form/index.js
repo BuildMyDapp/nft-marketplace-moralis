@@ -20,7 +20,6 @@ import 'dotenv'
 // import Buffer from 'buffer';
 import Loader from "react-loader-spinner";
 
-import { mintNft } from '../../../store/asyncActions';
 
 const validationSchema = yup.object({
     // name: yup
@@ -137,7 +136,6 @@ const PublishNftForm = () => {
       let token_uri = `${apiUrl}get_nft?token_id=${tId}`
     
 
-      await mintNft(web3,contract,accounts,100,token_uri,apiUrl,name)
       console.log("submitForkm", submitForm)
     
     }

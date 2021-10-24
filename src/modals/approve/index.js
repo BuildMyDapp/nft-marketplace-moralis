@@ -3,10 +3,11 @@ import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import { useStore } from "../../context/GlobalState";
 import TextField from "@material-ui/core/TextField";
-import { payDownPaymentAndFeeAsync } from '../../store/asyncActions';
-import { makeApiTrigger } from '../../store/actions';
+import { claimNftAsync } from '../../store/asyncActions';
 import 'dotenv'
-import { ERC20 } from '../../contract/ERC20';
+import {ERC20} from '../../contract/ERC20';
+import {COLLECTRAL_ADDRESS} from '../../contract/colletral'
+
 
 
 function getModalStyle() {
@@ -60,41 +61,35 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const EnterDownPayment = ({ data, handleCloseResellModal }) => {
-  const [qrCode, setQrCode] = useState(false);
-  const [{ web3, accounts, contract, apiUrl, apiTrigger, colletralContract }, dispatch] = useStore();
+const ApproveToken = ({ data }) => {
+  const [{ web3, accounts }, dispatch] = useStore();
   let [etherAmount, setEtheAmount] = useState("");
-  let [tradeId, settradeId] = useState("");
-  let [currencyAddress, setcurrencyAddress] = useState("");
+  let [address, setaddress] = useState("");
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
-  const sendRequest = useCallback(async () => {
-    // loadBlockchain(dispatch);
-  }, []);
 
   const onSubmit = async () => {
-    let ownerAddress = accounts[0];
     let price = web3.utils.toWei(etherAmount, 'ether');
+
     price = price.toString()
     console.log("price", typeof price)
-    console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
-      let handleApiTrigger = () => {
-        dispatch(makeApiTrigger(!apiTrigger));
-        handleCloseResellModal()
-      }
 
-      let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price, currencyAddress
-      )
+      const contract = new web3.eth.Contract(ERC20, address); 
+      console.log("contract",contract.methods)
+      let receipt = await contract.methods.approve(COLLECTRAL_ADDRESS,price).send({from:accounts[0]})
+      
+
 
     }
     catch (error) {
       console.log("error", error);
-      dispatch(makeApiTrigger(!apiTrigger));
     }
   };
+
+  console.log("datadatadatadata", data)
 
 
 
@@ -102,29 +97,18 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
     <div>
       <>
         <div style={modalStyle} className={classes.paper}>
-          <h1 style={{ color: "black" }}>Collateral your NFT </h1>
-
-          {
-            Math.sign(etherAmount) != "-1" ?
-              "" :
-              <h6 className="maga-para" style={{ color: "red" }}>*Negative Value not Allowed*</h6>
-          }
-
-          <TextField type="number"
-            className="text-field" placeholder="Amount" label="Enter Amount" type="number" value={etherAmount} onChange={(e) => setEtheAmount(e.target.value)}
-          />
+          <h1 style={{ color: "black" }}>Approve  </h1>
+ 
           <TextField type="text"
-            className="text-field" placeholder="currencyAddress" label="Enter currencyAddress" type="text" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
+            className="text-field" placeholder="Amount" label="Enter Currency Address" type="text" value={address} onChange={(e) => setaddress(e.target.value)}
           />
-          <TextField type="text"
-            className="text-field" placeholder="Amount" label="Enter trade id" type="text" value={tradeId} onChange={(e) => settradeId(e.target.value)}
+                <TextField type="text"
+            className="text-field" placeholder="Amount" label="Enter amount" type="text" value={etherAmount} onChange={(e) => setEtheAmount(e.target.value)}
           />
-
           <button className="buy-btn" onClick={onSubmit}
           >
-            Pay Down Payment
+            Approve
             </button>
-
 
 
         </div>
@@ -134,4 +118,4 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
   );
 };
 
-export default EnterDownPayment;
+export default ApproveToken;

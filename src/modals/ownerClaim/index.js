@@ -3,10 +3,9 @@ import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import { useStore } from "../../context/GlobalState";
 import TextField from "@material-ui/core/TextField";
-import { payDownPaymentAndFeeAsync } from '../../store/asyncActions';
-import { makeApiTrigger } from '../../store/actions';
+import { claimNftAsync } from '../../store/asyncActions';
 import 'dotenv'
-import { ERC20 } from '../../contract/ERC20';
+
 
 
 function getModalStyle() {
@@ -60,9 +59,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const EnterDownPayment = ({ data, handleCloseResellModal }) => {
-  const [qrCode, setQrCode] = useState(false);
-  const [{ web3, accounts, contract, apiUrl, apiTrigger, colletralContract }, dispatch] = useStore();
+const OwnerClaimNft = ({ data, handleCloseResellModal }) => {
+  const [{ web3, accounts, contract, colletralContract }, dispatch] = useStore();
   let [etherAmount, setEtheAmount] = useState("");
   let [tradeId, settradeId] = useState("");
   let [currencyAddress, setcurrencyAddress] = useState("");
@@ -70,31 +68,30 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
-  const sendRequest = useCallback(async () => {
-    // loadBlockchain(dispatch);
-  }, []);
+
 
   const onSubmit = async () => {
-    let ownerAddress = accounts[0];
+    // let price = etherAmount * 10e17
     let price = web3.utils.toWei(etherAmount, 'ether');
+
     price = price.toString()
     console.log("price", typeof price)
-    console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
-      let handleApiTrigger = () => {
-        dispatch(makeApiTrigger(!apiTrigger));
-        handleCloseResellModal()
-      }
 
-      let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price, currencyAddress
+
+      let receipt = await claimNftAsync(colletralContract, accounts, tradeId
       )
+
 
     }
     catch (error) {
       console.log("error", error);
-      dispatch(makeApiTrigger(!apiTrigger));
     }
   };
+
+  console.log("datadatadatadata", data)
+
+
 
 
 
@@ -102,29 +99,15 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
     <div>
       <>
         <div style={modalStyle} className={classes.paper}>
-          <h1 style={{ color: "black" }}>Collateral your NFT </h1>
-
-          {
-            Math.sign(etherAmount) != "-1" ?
-              "" :
-              <h6 className="maga-para" style={{ color: "red" }}>*Negative Value not Allowed*</h6>
-          }
-
-          <TextField type="number"
-            className="text-field" placeholder="Amount" label="Enter Amount" type="number" value={etherAmount} onChange={(e) => setEtheAmount(e.target.value)}
-          />
-          <TextField type="text"
-            className="text-field" placeholder="currencyAddress" label="Enter currencyAddress" type="text" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
-          />
+          <h1 style={{ color: "black" }}>Owner Claim Nft </h1>
+ 
           <TextField type="text"
             className="text-field" placeholder="Amount" label="Enter trade id" type="text" value={tradeId} onChange={(e) => settradeId(e.target.value)}
           />
-
           <button className="buy-btn" onClick={onSubmit}
           >
-            Pay Down Payment
+            Claim
             </button>
-
 
 
         </div>
@@ -134,4 +117,4 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
   );
 };
 
-export default EnterDownPayment;
+export default OwnerClaimNft;

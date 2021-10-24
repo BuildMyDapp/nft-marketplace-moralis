@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./cards.css";
 import { Card, Menu, Dropdown, Tooltip } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import cardIcon from "../../../images/cardIcon.gif";
+import cardImg2 from "../../../images/cardImg2.webp";
+
 import Modal from '@material-ui/core/Modal';
-import { sendPeriodicPaymentAsync, claimNftAsync } from '../../../store/asyncActions';
+import { claimNftAsync } from '../../../store/asyncActions';
 import { useStore } from "../../../context/GlobalState";
 
 import SentPeriodicPayment from '../../../modals/periodicPayment/index';
+import OwnerClaimNft from '../../../modals/ownerClaim/index';
+import ClaimNft from '../../../modals/claim/index';
 
 const Cards = ({ item }) => {
-  const [{ web3, accounts, contract, apiUrl, apiTrigger, colletralContract }, dispatch] = useStore();
+  const [{ web3, accounts, contract, colletralContract }, dispatch] = useStore();
 
   console.log(item);
   const [resellModal, setResellModal] = useState(false);
+  const [claimModal, setclaimModal] = useState(false);
+  const [ownerClaimModal, setownerClaimModal] = useState(false);
 
   const menu = () => (
     <>
@@ -45,17 +51,37 @@ const Cards = ({ item }) => {
     setResellModal(false);
   };
 
-  
-  const ClaimNft = async () => {
-    try {
-      let receipt = await claimNftAsync(web3, colletralContract, accounts, item.nfT_colletral_id, apiUrl,
-        item
-      )
-    }
-    catch (error) {
-      console.log("error", error);
-    }
+
+//claim
+  const ClaimOpen = () => {
+    setclaimModal(true);
   };
+
+  const ClaimClose = () => {
+    setclaimModal(false);
+  };
+
+
+  //owner claim
+  const ownerClaimOpen = () => {
+    setownerClaimModal(true);
+  };
+
+  const ownerClaimClose = () => {
+    setownerClaimModal(false);
+  };
+
+
+  // const ClaimNft = async () => {
+  //   try {
+  //     let receipt = await claimNftAsync(colletralContract, accounts, 4,
+  //       item
+  //     )
+  //   }
+  //   catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
   return (
     <>
       <Card
@@ -96,7 +122,7 @@ const Cards = ({ item }) => {
                     fontWeight: "650",
                   }}
                 >
-                  <img src={item.image} alt="" height="35" />
+                  <img src={cardImg2} alt="" height="35" />
                 </Tooltip>
               </li>
 
@@ -114,23 +140,25 @@ const Cards = ({ item }) => {
           </Dropdown>
         }
       >
-        <img alt="card " className="cardImg" src={item.image} />
+        <img alt="card " className="cardImg" src={cardImg2} />
         <p className="cardName">#15881- {item ?.description}</p>
-        <p className="etherium">
-          {item ?.price} ETH <span>1/1</span>
-        </p>
+    
         <div className="placeBid">
-          <p>Place a bid</p>
-          <div>
-            <i className="fas fa-heart"></i>&nbsp; 6
-          </div>
-          <div>
-            <button onClick={handleOpenResellModal}>Send Periodic</button>
-            <button onClick={ClaimNft}
-          >
-            Claim Nft
+    
+      
+            <div>
+            <button className="nft-btn-2" onClick={handleOpenResellModal}>Send Periodic</button>
+            <button className="nft-btn-2" onClick={ClaimOpen}
+            >
+              Claim Nft
             </button>
-          </div>
+            </div>
+
+            <br/>
+            <button className="nft-btn-2" onClick={ownerClaimOpen}
+            >
+             Owner Claim Nft
+            </button>
         </div>
       </Card>
       <Modal
@@ -140,6 +168,26 @@ const Cards = ({ item }) => {
         aria-describedby="simple-modal-description"
       >
         <SentPeriodicPayment data={item} handleCloseResellModal={handleCloseResellModal} />
+      </Modal>
+
+      {/* claim */}
+      <Modal
+        open={claimModal}
+        onClose={ClaimClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <ClaimNft data={item} />
+      </Modal>
+
+      {/* owner claim */}
+      <Modal
+        open={ownerClaimModal}
+        onClose={ownerClaimClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <OwnerClaimNft data={item} ownerClaimClose={ownerClaimClose} />
       </Modal>
     </>
   );

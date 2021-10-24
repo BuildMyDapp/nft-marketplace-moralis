@@ -2,7 +2,6 @@ import "./App.css";
 import Navbar from "./component/navbar/Navbar";
 import Topbar from "./component/topbar/Topbar";
 import HomeScreen from "./screens/Home/HomeScreen";
-import ListNft from "./screens/ListNft/ListNft";
 import FrontMoney from "./screens/Frontmoney/FrontMoney";
 import Balance from "./screens/Balance/Balance";
 import PublishNft from "./screens/publishNft/index";
@@ -18,7 +17,6 @@ function App() {
 
       <div className="container">
         <Route path="/" exact component={HomeScreen} />
-        <Route path="/list_nft" component={ListNft} />
         <Route path="/my_collection" component={FrontMoney} />
         <Route path="/balance" component={Balance} />
         <Route path="/publish_nft" component={PublishNft} />

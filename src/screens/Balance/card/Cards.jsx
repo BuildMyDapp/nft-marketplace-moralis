@@ -4,12 +4,16 @@ import { Card, Menu, Dropdown, Tooltip } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import cardIcon from "../../../images/cardIcon.gif";
 import Modal from '@material-ui/core/Modal';
-
+import cardImg2 from "../../../images/cardImg2.webp";
+import {ERC721_ABI} from '../../../contract/ERC721';
 import EnterColletral from '../../../modals/enterColletral/index';
+import {COLLECTRAL_ADDRESS} from '../../../contract/colletral'
+import { useStore } from '../../../context/GlobalState';
 
 const Cards = ({ item }) => {
   console.log(item);
   const [resellModal, setResellModal] = useState(false);
+  const [{ web3, accounts }, dispatch] = useStore();
 
   const menu = () => (
     <>
@@ -34,12 +38,28 @@ const Cards = ({ item }) => {
   );
 
   const handleOpenResellModal = () => {
+    console.log("this nft",item)
     setResellModal(true);
   };
 
   const handleCloseResellModal = () => {
     setResellModal(false);
   };
+
+  const handleApprove = async() => {
+    try{
+      const contract = new web3.eth.Contract(ERC721_ABI, item.token_address);
+      console.log("contractcontract",contract)
+      console.log("contractcontract",item.token_id,COLLECTRAL_ADDRESS)
+
+      let receipt = await contract.methods.approve(COLLECTRAL_ADDRESS,item.token_id).send({ from: accounts[0] })
+
+    }
+    catch(error){
+      console.log("error",error)
+    }
+  }
+
 
   return (
     <>
@@ -81,7 +101,7 @@ const Cards = ({ item }) => {
                     fontWeight: "650",
                   }}
                 >
-                  <img src={item.image} alt="" height="35" />
+                  <img src={cardImg2} alt="" height="35" />
                 </Tooltip>
               </li>
 
@@ -99,18 +119,20 @@ const Cards = ({ item }) => {
           </Dropdown>
         }
       >
-        <img alt="card " className="cardImg" src={item.image} />
+        <img alt="card " className="cardImg" src={cardImg2} />
         <p className="cardName">#15881- {item ?.description}</p>
-        <p className="etherium">
-          {item ?.price} ETH <span>1/1</span>
-        </p>
+        <p className="cardName">address- {item ?.token_address}</p>
+        <p>Token id {item?.token_id}</p>
+
         <div className="placeBid">
-          <p>Place a bid</p>
+        
+        
           <div>
-            <i className="fas fa-heart"></i>&nbsp; 6
+            <button className="nft-btn" onClick={handleApprove}>Approve</button>
           </div>
+
           <div>
-            <button onClick={handleOpenResellModal}>NFT collateral</button>
+            <button className="nft-btn" onClick={handleOpenResellModal}>NFT collateral</button>
           </div>
         </div>
       </Card>

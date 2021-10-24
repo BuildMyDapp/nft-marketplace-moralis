@@ -18,11 +18,7 @@ const HomeScreen = () => {
 
   useEffect(async () => {
 
-    let fetchNftData = await fetch(`${apiUrl}list_nfts`)
-    fetchNftData = await fetchNftData.json();
-    fetchNftData = fetchNftData ? fetchNftData.data : fetchNftData;
-    fetchNftData = fetchNftData.reverse()
-    setNFTData(fetchNftData)
+    setNFTData(data)
 
   }, [])
   return (
@@ -41,7 +37,7 @@ const HomeScreen = () => {
           <div className="row">
             <div className="col-lg-6 col-xl-4 col-md-6  col-sm-12 padClass rightHeroVid">
               <div className="card">
-                <p className="text-white">PHYGITAL TOY</p>
+                <p className="text-white">PHYSICAL TOY</p>
                 <video
                   playsInline
                   autoPlay
@@ -53,7 +49,7 @@ const HomeScreen = () => {
             </div>
             <div className="col-lg-6  col-xl-4   col-md-6 col-sm-12  padClass rightHeroVid">
               <div className="card">
-                <p className="text-white">PHYGITAL TOY</p>
+                <p className="text-white">PHYSICAL TOY</p>
                 <video
                   playsInline
                   autoPlay
@@ -65,7 +61,7 @@ const HomeScreen = () => {
             </div>
             <div className="col-lg-6 col-xl-4     col-md-6 col-sm-12  padClass rightHeroVid">
               <div className="card">
-                <p className="text-white">PHYGITAL TOY</p>
+                <p className="text-white">PHYSICAL TOY</p>
                 <video
                   autoPlay
                   loop
@@ -76,7 +72,7 @@ const HomeScreen = () => {
             </div>
             <div className="col-lg-6  col-xl-4    col-md-6 col-sm-12  padClass rightHeroVid">
               <div className="card">
-                <p className="text-white">PHYGITAL TOY</p>
+                <p className="text-white">PHYSICAL TOY</p>
                 <video
                   autoPlay
                   loop
@@ -87,7 +83,7 @@ const HomeScreen = () => {
             </div>
             <div className="col-lg-6 col-xl-4   col-md-6 col-sm-12 padClass rightHeroVid">
               <div className="card">
-                <p className="text-white">PHYGITAL TOY</p>
+                <p className="text-white">PHYSICAL TOY</p>
                 <video
                   autoPlay
                   loop
@@ -98,7 +94,7 @@ const HomeScreen = () => {
             </div>
             <div className="col-lg-6 col-xl-4   col-md-6 col-sm-12 padClass rightHeroVid">
               <div className="card">
-                <p className="text-white">PHYGITAL TOY</p>
+                <p className="text-white">PHYSICAL TOY</p>
                 <video
                   autoPlay
                   loop

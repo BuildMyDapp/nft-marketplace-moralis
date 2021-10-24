@@ -5,7 +5,7 @@ import { Fade, Modal, Backdrop } from "@material-ui/core";
 import { useStore } from "../../context/GlobalState";
 import TextField from "@material-ui/core/TextField";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import {liftNftColetralAsync } from '../../store/asyncActions';
+import { liftNftColetralAsync } from '../../store/asyncActions';
 import { makeApiTrigger } from '../../store/actions';
 import 'dotenv'
 
@@ -80,18 +80,54 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
 
   const onSubmit = async () => {
     let ownerAddress = accounts[0];
-    let price = etherAmount * 10e17
-    price = price.toString()
-    console.log("price", typeof price)
-    console.log("onSubmitcolletralContract",colletralContract.methods)
+    let amount = etherAmount * 10e17
+    amount = amount.toString()
+    let token_id = data.token_id;
+    console.log("token_id", token_id)
+
+    console.log("amount", typeof amount)
+    console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
       let handleApiTrigger = () => {
         dispatch(makeApiTrigger(!apiTrigger));
         handleCloseResellModal()
       }
-      let receipt = await liftNftColetralAsync(web3, colletralContract, accounts, price, paymentPeriod,
-        downPaymentPeriod, duration, currencyAddress, apiUrl, data)
-        // if(receipt) {}
+      let nfT_colletral_id = await colletralContract.methods.tradeCounter().call();
+      console.log("nfT_colletral_id", nfT_colletral_id)
+
+      let receipt = await liftNftColetralAsync(colletralContract, accounts, amount, paymentPeriod,
+        downPaymentPeriod, duration, currencyAddress, data)
+      if (receipt) {
+        let token_address = data.token_address;
+
+        let currency_address = currencyAddress
+        let name = data.name
+        let description = data.description;
+        let image = data.image;
+        let payment_period = paymentPeriod;
+        let down_payment_period = downPaymentPeriod;
+        let image_uri = data.image;
+        let owner_address = accounts[0]
+        const myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+        const requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: JSON.stringify({
+            name, description,
+            image, token_address, token_id,
+            payment_period, down_payment_period, duration, amount, image_uri, owner_address, nfT_colletral_id,
+            currency_address
+          })
+        };
+        let fetchNftData = await fetch(`${apiUrl}save_nft`, requestOptions);
+
+        fetchNftData = await fetchNftData.json();
+
+      }
+
+
 
 
     }
@@ -101,22 +137,16 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
     }
   };
 
-  console.log("datadatadatadata",data)
+  console.log("datadatadatadata", data)
 
 
 
 
   return (
-    <div> 
+    <div>
       <>
         <div style={modalStyle} className={classes.paper}>
           <h1 style={{ color: "black" }}>Collateral your NFT </h1>
-
-          {
-            Math.sign(etherAmount) != "-1" ?
-              "" :
-              <h6 className="maga-para" style={{ color: "red" }}>*Negative Value not Allowed*</h6>
-          }
 
           <TextField type="number"
             className="text-field" placeholder="Amount" label="Enter Amount" type="number" value={etherAmount} onChange={(e) => setEtheAmount(e.target.value)}
@@ -125,12 +155,12 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
             className="text-field" placeholder="paymentPeriod" label="paymentPeriod" type="number" value={paymentPeriod} onChange={(e) => setPaymentPeriod(e.target.value)}
           />
           <TextField type="number"
-            className="text-field" placeholder="downPaymentPeriod" label="downPaymentPeriod" type="number" value={downPaymentPeriod} onChange={(e) => setDownPaymentPeriod(e.target.value)}
+            className="text-field" placeholder="downPaymentPercent" label="downPaymentPercent" type="number" value={downPaymentPeriod} onChange={(e) => setDownPaymentPeriod(e.target.value)}
           />
           <TextField type="number"
             className="text-field" placeholder="duration" label="duration" type="number" value={duration} onChange={(e) => setDuration(e.target.value)}
           />
-               <TextField type="text"
+          <TextField type="text"
             className="text-field" placeholder="currencyAddress" label="currencyAddress" type="text" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
           />
           <button className="buy-btn" onClick={onSubmit}

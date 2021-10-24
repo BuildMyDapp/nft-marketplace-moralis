@@ -1,12 +1,9 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
-import { Fade, Modal, Backdrop } from "@material-ui/core";
 import { useStore } from "../../context/GlobalState";
 import TextField from "@material-ui/core/TextField";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { sendPeriodicPaymentAsync, claimNftAsync } from '../../store/asyncActions';
-import { makeApiTrigger } from '../../store/actions';
+import { sendPeriodicPaymentAsync } from '../../store/asyncActions';
 import 'dotenv'
 
 
@@ -63,12 +60,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SentPeriodicPayment = ({ data, handleCloseResellModal }) => {
-  const [qrCode, setQrCode] = useState(false);
-  const [{ web3, accounts, contract, apiUrl, apiTrigger, colletralContract }, dispatch] = useStore();
+  const [{ web3, accounts, contract, colletralContract }, dispatch] = useStore();
   let [etherAmount, setEtheAmount] = useState("");
-  let [paymentPeriod, setPaymentPeriod] = useState("");
-  let [downPaymentPeriod, setDownPaymentPeriod] = useState("");
-  let [duration, setDuration] = useState("");
+  let [tradeId, settradeId] = useState("");
   let [currencyAddress, setcurrencyAddress] = useState("");
 
   const classes = useStyles();
@@ -79,27 +73,21 @@ const SentPeriodicPayment = ({ data, handleCloseResellModal }) => {
   }, []);
 
   const onSubmit = async () => {
-    let ownerAddress = accounts[0];
-    let price = etherAmount * 10e17
+    // let price = etherAmount * 10e17
+    let price = web3.utils.toWei(etherAmount, 'ether');
+
     price = price.toString()
     console.log("price", typeof price)
-    console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
-      let handleApiTrigger = () => {
-        dispatch(makeApiTrigger(!apiTrigger));
-        handleCloseResellModal()
-      }
 
-      let receipt = await sendPeriodicPaymentAsync(web3, colletralContract, accounts, data.nfT_colletral_id, apiUrl,
-        data, price, data.currency_address
+
+      let receipt = await sendPeriodicPaymentAsync(colletralContract, accounts, tradeId, price, currencyAddress
       )
-      // if(receipt) {}
 
 
     }
     catch (error) {
       console.log("error", error);
-      dispatch(makeApiTrigger(!apiTrigger));
     }
   };
 
@@ -124,11 +112,17 @@ const SentPeriodicPayment = ({ data, handleCloseResellModal }) => {
           <TextField type="number"
             className="text-field" placeholder="Amount" label="Enter Amount" type="number" value={etherAmount} onChange={(e) => setEtheAmount(e.target.value)}
           />
+          <TextField type="text"
+            className="text-field" placeholder="currencyAddress" label="Enter currencyAddress" type="text" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
+          />
+          <TextField type="text"
+            className="text-field" placeholder="Amount" label="Enter trade id" type="text" value={tradeId} onChange={(e) => settradeId(e.target.value)}
+          />
           <button className="buy-btn" onClick={onSubmit}
           >
             sent periodic payment
             </button>
-   
+
 
         </div>
       </>
