@@ -2,12 +2,12 @@ import React from "react";
 import "./navbar.css";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { Link } from 'react-router-dom'
+import { Link ,useLocation } from 'react-router-dom'
 
 const Navbar = () => {
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
-
+const location=useLocation();
   return (
     <div>
       {/* <nav className="mx-3 mt-1 navbar navbar-expand-lg    ">
@@ -108,7 +108,7 @@ const Navbar = () => {
               <li className="nav-item ">
                 <Link to="/">
                   {/* <a className="nav-link active"> */}
-                  <a className="nav-link active">
+                  <a   className={location?.pathname==="/"? "nav-link active":"nav-link "}  >
                     Marketplace
                 </a>
                 </Link>
@@ -123,14 +123,14 @@ const Navbar = () => {
               </li> */}
               <li className="nav-item">
                 <Link to="/balance">
-                  <a className="nav-link navL" >
+                  <a   className={location?.pathname==="/balance"? "nav-link active":"nav-link navL" } >
                     Balance Page
                 </a>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="/my_collection">
-                  <a className="nav-link navL" >
+                  <a    className={location?.pathname==="/my_collection"? "nav-link active":"nav-link navL" }>
                     front-money Nft
                 </a>
                 </Link>
