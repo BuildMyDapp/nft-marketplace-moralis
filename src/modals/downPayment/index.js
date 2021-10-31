@@ -7,6 +7,7 @@ import { payDownPaymentAndFeeAsync } from '../../store/asyncActions';
 import { makeApiTrigger } from '../../store/actions';
 import 'dotenv'
 import { ERC20 } from '../../contract/ERC20';
+import {COLLECTRAL_ADDRESS} from '../../contract/colletral'
 
 
 function getModalStyle() {
@@ -64,15 +65,17 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
   const [qrCode, setQrCode] = useState(false);
   const [{ web3, accounts, contract, apiUrl, apiTrigger, colletralContract }, dispatch] = useStore();
   let [etherAmount, setEtheAmount] = useState("");
-  let [tradeId, settradeId] = useState("");
-  let [currencyAddress, setcurrencyAddress] = useState("");
-
+  const [approveToggle,setApproveToggle] = useState(false)
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
   const sendRequest = useCallback(async () => {
     // loadBlockchain(dispatch);
   }, []);
+  let currencyAddress = data.currency_address;
+  let tradeId = data.nfT_colletral_id
+
+  console.log("data",data)
 
   const onSubmit = async () => {
     let ownerAddress = accounts[0];
@@ -81,10 +84,7 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
     console.log("price", typeof price)
     console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
-      let handleApiTrigger = () => {
-        dispatch(makeApiTrigger(!apiTrigger));
-        handleCloseResellModal()
-      }
+
 
       let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price, 
         currencyAddress)
@@ -99,6 +99,24 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
     }
   };
 
+  const handleApprove = async () => {
+    let amount = 300 * 10 ** 18;
+    amount = amount.toString()
+
+    console.log("amount",amount)
+    try {
+
+      const contract = new web3.eth.Contract(ERC20, currencyAddress); 
+      console.log("contract",contract.methods)
+      let receipt = await contract.methods.approve(COLLECTRAL_ADDRESS,amount).send({from:accounts[0]})
+      setApproveToggle(true)
+
+
+    }
+    catch (error) {
+      console.log("error", error);
+    }
+  };
 
 
   return (
@@ -116,17 +134,22 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
           <TextField type="number"
             className="text-field" placeholder="Amount" label="Enter Amount" type="number" value={etherAmount} onChange={(e) => setEtheAmount(e.target.value)}
           />
-          <TextField type="text"
-            className="text-field" placeholder="currencyAddress" label="Enter currencyAddress" type="text" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
-          />
-          <TextField type="text"
-            className="text-field" placeholder="Amount" label="Enter trade id" type="text" value={tradeId} onChange={(e) => settradeId(e.target.value)}
-          />
 
-          <button className="buy-btn" onClick={onSubmit}
-          >
-            Pay Down Payment
-            </button>
+          {
+            approveToggle ?
+            <button className="buy-btn" onClick={onSubmit}
+            >
+              Pay Down Payment
+              </button>
+              :
+              <button className="buy-btn" onClick={handleApprove}
+              >
+                Approve
+                </button>
+    
+  
+          }
+
 
 
 

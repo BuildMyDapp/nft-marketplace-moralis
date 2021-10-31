@@ -16,11 +16,26 @@ const HomeScreen = () => {
 
   const [NFTData, setNFTData] = useState([])
 
+  // useEffect(async () => {
+
+  //   setNFTData(data)
+
+  // }, [])
   useEffect(async () => {
 
-    setNFTData(data)
+    const myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+  
+    let fetchNftData = await fetch(`${apiUrl}list_nft_colletral`);
+    fetchNftData = await fetchNftData.json();
+    fetchNftData = fetchNftData.data
+    console.log("fetchNftData", fetchNftData)
+    setNFTData(fetchNftData)
 
-  }, [])
+
+  
+  }, []);
   return (
     <>
      

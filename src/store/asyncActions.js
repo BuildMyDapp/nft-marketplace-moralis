@@ -94,7 +94,7 @@ export const liftNftColetralAsync = async (colletralContract, accounts, amount, 
         duration = duration.toString()
         let receipt = await colletralContract.methods.listNftCollateral(token_id, amount, paymentPeriod,
             downPaymentPeriod, duration, token_address,
-            "0xc778417E063141139Fce010982780140Aa0cD5Ab").send({ from: accounts[0] })
+            currency_address).send({ from: accounts[0] })
         return receipt;
     }
     catch (error) {
@@ -118,7 +118,7 @@ export const unLiftNftColetralAsync = async (colletralContract,
 
 export const payDownPaymentAndFeeAsync = async (colletralContract,
     accounts, tradeId, price, currencyAddress) => {
-        console.log("price",price)
+        console.log("payDownPaymentAndFeeAsync",tradeId, price, currencyAddress)
     try {
         let receipt = await colletralContract.methods.payDownPaymentAndFee(tradeId, currencyAddress, price).send({ from: accounts[0] })
         return receipt

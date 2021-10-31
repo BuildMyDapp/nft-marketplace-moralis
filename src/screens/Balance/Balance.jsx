@@ -24,12 +24,13 @@ const Balance = () => {
 
       const usernftBalance = await Moralis.Web3.getNFTs({ chain: "rinkeby" })
 
-      // console.log("metaData", metaData)
+      console.log("metaData", usernftBalance)
       let nftArray = []
       for (let i = 5; i < usernftBalance.length; i++) {
         let neo = {}
         neo['token_id'] = usernftBalance[i].token_id
         neo['token_address'] = usernftBalance[i].token_address
+        neo['name'] = usernftBalance[i].name
 
         nftArray.push(neo);
         console.log("dsdsad", neo)

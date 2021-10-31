@@ -79,34 +79,27 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
   }, []);
 
   const onSubmit = async () => {
-    let ownerAddress = accounts[0];
     let amount = etherAmount * 10e17
     amount = amount.toString()
     let token_id = data.token_id;
-    console.log("token_id", token_id)
+
 
     console.log("amount", typeof amount)
     console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
-      let handleApiTrigger = () => {
-        dispatch(makeApiTrigger(!apiTrigger));
-        handleCloseResellModal()
-      }
+  
       let nfT_colletral_id = await colletralContract.methods.tradeCounter().call();
       console.log("nfT_colletral_id", nfT_colletral_id)
 
-      let receipt = await liftNftColetralAsync(colletralContract, accounts, amount, paymentPeriod,
-        downPaymentPeriod, duration, currencyAddress, data)
-        if (receipt && receipt.status) {
+      // let receipt = await liftNftColetralAsync(colletralContract, accounts, amount, paymentPeriod,
+      //   downPaymentPeriod, duration, currencyAddress, data)
+        
+      //   if (receipt && receipt.status) {
           let token_address = data.token_address;
-
         let currency_address = currencyAddress
         let name = data.name
-        let description = data.description;
-        let image = data.image;
         let payment_period = paymentPeriod;
         let down_payment_period = downPaymentPeriod;
-        let image_uri = data.image;
         let owner_address = accounts[0]
         const myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
@@ -115,19 +108,16 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
           method: 'POST',
           headers: myHeaders,
           body: JSON.stringify({
-            name, description,
-            image, token_address, token_id,
-            payment_period, down_payment_period, duration, amount, image_uri, owner_address, nfT_colletral_id,
-            currency_address
+            name, token_address, token_id,
+            payment_period, down_payment_period, duration, amount, owner_address, nfT_colletral_id,
+            currency_address  
           })
         };
-        let fetchNftData = await fetch(`${apiUrl}save_nft`, requestOptions);
+        let fetchNftData = await fetch(`${apiUrl}save_collateral_nft`, requestOptions);
 
         fetchNftData = await fetchNftData.json();
 
-      }
-
-
+      // }
 
 
     }
