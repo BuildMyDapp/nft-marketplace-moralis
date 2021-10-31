@@ -97,8 +97,8 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
 
       let receipt = await liftNftColetralAsync(colletralContract, accounts, amount, paymentPeriod,
         downPaymentPeriod, duration, currencyAddress, data)
-      if (receipt) {
-        let token_address = data.token_address;
+        if (receipt && receipt.status) {
+          let token_address = data.token_address;
 
         let currency_address = currencyAddress
         let name = data.name

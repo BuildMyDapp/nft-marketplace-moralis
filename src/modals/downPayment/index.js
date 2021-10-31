@@ -86,8 +86,11 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
         handleCloseResellModal()
       }
 
-      let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price, currencyAddress
-      )
+      let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price, 
+        currencyAddress)
+      if (receipt && receipt.status) {
+        
+      }
 
     }
     catch (error) {

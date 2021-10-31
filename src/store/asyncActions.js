@@ -94,7 +94,7 @@ export const liftNftColetralAsync = async (colletralContract, accounts, amount, 
         duration = duration.toString()
         let receipt = await colletralContract.methods.listNftCollateral(token_id, amount, paymentPeriod,
             downPaymentPeriod, duration, token_address,
-            currency_address).send({ from: accounts[0] })
+            "0xc778417E063141139Fce010982780140Aa0cD5Ab").send({ from: accounts[0] })
         return receipt;
     }
     catch (error) {

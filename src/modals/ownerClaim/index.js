@@ -79,9 +79,11 @@ const OwnerClaimNft = ({ data, handleCloseResellModal }) => {
     try {
 
 
-      let receipt = await claimNftAsync(colletralContract, accounts, tradeId
-      )
-
+      let receipt = await claimNftAsync(colletralContract, accounts, tradeId)
+      if (receipt && receipt.status) {
+        
+      }
+      
 
     }
     catch (error) {

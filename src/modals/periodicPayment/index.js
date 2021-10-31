@@ -81,8 +81,11 @@ const SentPeriodicPayment = ({ data, handleCloseResellModal }) => {
     try {
 
 
-      let receipt = await sendPeriodicPaymentAsync(colletralContract, accounts, tradeId, price, currencyAddress
-      )
+      let receipt = await sendPeriodicPaymentAsync(colletralContract, accounts, tradeId,
+        price, currencyAddress)
+      if (receipt && receipt.status) {
+
+      }
 
 
     }
