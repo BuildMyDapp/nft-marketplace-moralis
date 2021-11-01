@@ -115,7 +115,7 @@ const Cards = ({ item }) => {
       
       
         <div className="nft-btn-cont">
-            <button className="nft-approve" onClick={handleApproveOpen}>Approve</button>
+            {/* <button className="nft-approve" onClick={handleApproveOpen}>Approve</button> */}
         
             <button className="nft-approve" onClick={handleOpenResellModal}>DownPayment</button>
           </div>

@@ -79,12 +79,11 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
   }, []);
 
   const onSubmit = async () => {
-    let amount = etherAmount * 10e17
-    amount = amount.toString()
+    let price = etherAmount * 10e17
+    price = price.toString()
     let token_id = data.token_id;
 
 
-    console.log("amount", typeof amount)
     console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
   
@@ -109,7 +108,7 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
           headers: myHeaders,
           body: JSON.stringify({
             name, token_address, token_id,
-            payment_period, down_payment_period, duration, amount, owner_address, nfT_colletral_id,
+            payment_period, down_payment_period, duration, price, owner_address, nfT_colletral_id,
             currency_address  
           })
         };

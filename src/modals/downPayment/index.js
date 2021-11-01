@@ -7,7 +7,7 @@ import { payDownPaymentAndFeeAsync } from '../../store/asyncActions';
 import { makeApiTrigger } from '../../store/actions';
 import 'dotenv'
 import { ERC20 } from '../../contract/ERC20';
-import {COLLECTRAL_ADDRESS} from '../../contract/colletral'
+import { COLLECTRAL_ADDRESS } from '../../contract/colletral'
 
 
 function getModalStyle() {
@@ -65,7 +65,7 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
   const [qrCode, setQrCode] = useState(false);
   const [{ web3, accounts, contract, apiUrl, apiTrigger, colletralContract }, dispatch] = useStore();
   let [etherAmount, setEtheAmount] = useState("");
-  const [approveToggle,setApproveToggle] = useState(false)
+  const [approveToggle, setApproveToggle] = useState(false)
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -75,7 +75,7 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
   let currencyAddress = data.currency_address;
   let tradeId = data.nfT_colletral_id
 
-  console.log("data",data)
+  console.log("data", data)
 
   const onSubmit = async () => {
     let ownerAddress = accounts[0];
@@ -86,11 +86,26 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
     try {
 
 
-      let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price, 
-        currencyAddress)
-      if (receipt && receipt.status) {
-        
-      }
+      // let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price,
+      //   currencyAddress)
+      // if (receipt && receipt.status) {
+        let dp_address = accounts[0];
+        let id = data.id;
+        const myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+        const requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: JSON.stringify({
+            dp_address, id
+          })
+        };
+        let fetchNftData = await fetch(`${apiUrl}dp_update`, requestOptions);
+
+        fetchNftData = await fetchNftData.json();
+
+      // }
 
     }
     catch (error) {
@@ -103,12 +118,12 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
     let amount = 300 * 10 ** 18;
     amount = amount.toString()
 
-    console.log("amount",amount)
+    console.log("amount", amount)
     try {
 
-      const contract = new web3.eth.Contract(ERC20, currencyAddress); 
-      console.log("contract",contract.methods)
-      let receipt = await contract.methods.approve(COLLECTRAL_ADDRESS,amount).send({from:accounts[0]})
+      const contract = new web3.eth.Contract(ERC20, currencyAddress);
+      console.log("contract", contract.methods)
+      let receipt = await contract.methods.approve(COLLECTRAL_ADDRESS, amount).send({ from: accounts[0] })
       setApproveToggle(true)
 
 
@@ -136,18 +151,18 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
           />
 
           {
-            approveToggle ?
-            <button className="buy-btn" onClick={onSubmit}
-            >
-              Pay Down Payment
+            !approveToggle ?
+              <button className="buy-btn" onClick={onSubmit}
+              >
+                Pay Down Payment
               </button>
               :
               <button className="buy-btn" onClick={handleApprove}
               >
                 Approve
                 </button>
-    
-  
+
+
           }
 
 
