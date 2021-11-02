@@ -148,6 +148,7 @@ export const sendPeriodicPaymentAsync = async (colletralContract,
 
 export const claimNftAsync = async (colletralContract,
     accounts, tradeId) => {
+        
     try {
         let receipt = await colletralContract.methods.claimNft(tradeId).send({ from: accounts[0] })
         return receipt

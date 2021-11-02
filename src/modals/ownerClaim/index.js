@@ -61,9 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OwnerClaimNft = ({ data, handleCloseResellModal }) => {
   const [{ web3, accounts, contract, colletralContract }, dispatch] = useStore();
-  let [etherAmount, setEtheAmount] = useState("");
   let [tradeId, settradeId] = useState("");
-  let [currencyAddress, setcurrencyAddress] = useState("");
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
@@ -71,11 +69,7 @@ const OwnerClaimNft = ({ data, handleCloseResellModal }) => {
 
 
   const onSubmit = async () => {
-    // let price = etherAmount * 10e17
-    let price = web3.utils.toWei(etherAmount, 'ether');
 
-    price = price.toString()
-    console.log("price", typeof price)
     try {
 
 

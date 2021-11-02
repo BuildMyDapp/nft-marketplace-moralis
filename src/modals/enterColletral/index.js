@@ -8,8 +8,8 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { liftNftColetralAsync } from '../../store/asyncActions';
 import { makeApiTrigger } from '../../store/actions';
 import 'dotenv'
-
-
+import { ERC721_ABI } from '../../contract/ERC721'
+import { COLLECTRAL_ADDRESS } from '../../contract/colletral'
 
 function getModalStyle() {
   const top = 50;
@@ -70,7 +70,7 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
   let [downPaymentPeriod, setDownPaymentPeriod] = useState("");
   let [duration, setDuration] = useState("");
   let [currencyAddress, setcurrencyAddress] = useState("");
-
+  const [approveToggle, setApproveToggle] = useState(false)
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -86,37 +86,37 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
 
     console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
-  
+
       let nfT_colletral_id = await colletralContract.methods.tradeCounter().call();
       console.log("nfT_colletral_id", nfT_colletral_id)
 
-      // let receipt = await liftNftColetralAsync(colletralContract, accounts, amount, paymentPeriod,
-      //   downPaymentPeriod, duration, currencyAddress, data)
-        
-      //   if (receipt && receipt.status) {
-          let token_address = data.token_address;
-        let currency_address = currencyAddress
-        let name = data.name
-        let payment_period = paymentPeriod;
-        let down_payment_period = downPaymentPeriod;
-        let owner_address = accounts[0]
-        const myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-        myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
-        const requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: JSON.stringify({
-            name, token_address, token_id,
-            payment_period, down_payment_period, duration, price, owner_address, nfT_colletral_id,
-            currency_address  
-          })
-        };
-        let fetchNftData = await fetch(`${apiUrl}save_collateral_nft`, requestOptions);
+      let receipt = await liftNftColetralAsync(colletralContract, accounts, price, paymentPeriod,
+        downPaymentPeriod, duration, currencyAddress, data)
 
-        fetchNftData = await fetchNftData.json();
+        if (receipt && receipt.status) {
+      let token_address = data.token_address;
+      let currency_address = currencyAddress
+      let name = data.name
+      let payment_period = paymentPeriod;
+      let down_payment_period = downPaymentPeriod;
+      let owner_address = accounts[0]
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Authorization', `Bearer ${process.env.REACT_APP_SIGN}`);
+      const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify({
+          name, token_address, token_id,
+          payment_period, down_payment_period, duration, price, owner_address, nfT_colletral_id,
+          currency_address
+        })
+      };
+      let fetchNftData = await fetch(`${apiUrl}save_collateral_nft`, requestOptions);
 
-      // }
+      fetchNftData = await fetchNftData.json();
+
+      }
 
 
     }
@@ -129,7 +129,18 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
   console.log("datadatadatadata", data)
 
 
+  const handleApprove = async () => {
+    try {
+      let token_address = data.token_address;
+      let token_id = data.token_id;
+      const contractErc721 = new web3.eth.Contract(ERC721_ABI, token_address);
+      let receipt = await contractErc721.methods.approve(COLLECTRAL_ADDRESS, token_id).send({ from: accounts[0] })
+      setApproveToggle(true);
+    }
+    catch (error) {
 
+    }
+  }
 
   return (
     <div>
@@ -152,10 +163,19 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
           <TextField type="text"
             className="text-field" placeholder="currencyAddress" label="currencyAddress" type="text" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
           />
-          <button className="buy-btn" onClick={onSubmit}
-          >
-            Collateral now
-            </button>
+          {
+            approveToggle ?
+              <button className="buy-btn" onClick={onSubmit}
+              >
+                Collateral now
+              </button>
+              :
+              <button className="buy-btn" onClick={handleApprove}
+              >
+                Approve
+                </button>
+          }
+
 
 
         </div>

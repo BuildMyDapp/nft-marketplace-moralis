@@ -86,9 +86,9 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
     try {
 
 
-      // let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price,
-      //   currencyAddress)
-      // if (receipt && receipt.status) {
+      let receipt = await payDownPaymentAndFeeAsync(colletralContract, accounts, tradeId, price,
+        currencyAddress)
+      if (receipt && receipt.status) {
         let dp_address = accounts[0];
         let id = data.id;
         const myHeaders = new Headers();
@@ -105,7 +105,7 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
 
         fetchNftData = await fetchNftData.json();
 
-      // }
+      }
 
     }
     catch (error) {
@@ -151,7 +151,7 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
           />
 
           {
-            !approveToggle ?
+            approveToggle ?
               <button className="buy-btn" onClick={onSubmit}
               >
                 Pay Down Payment

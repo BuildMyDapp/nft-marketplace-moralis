@@ -6,7 +6,7 @@ import cardIcon from "../../../images/cardIcon.gif";
 import cardImg2 from "../../../images/cardImg2.webp";
 
 import Modal from '@material-ui/core/Modal';
-import { claimNftAsync } from '../../../store/asyncActions';
+import { claimNftAsync, unLiftNftColetralAsync } from '../../../store/asyncActions';
 import { useStore } from "../../../context/GlobalState";
 
 import SentPeriodicPayment from '../../../modals/periodicPayment/index';
@@ -52,7 +52,7 @@ const Cards = ({ item }) => {
   };
 
 
-//claim
+  //claim
   const ClaimOpen = () => {
     setclaimModal(true);
   };
@@ -82,6 +82,16 @@ const Cards = ({ item }) => {
   //     console.log("error", error);
   //   }
   // };
+
+  const handleUnlistNft = async () => {
+    try {
+      let tradeId = item.nfT_colletral_id;
+      let receipt = await unLiftNftColetralAsync(colletralContract, accounts, tradeId)
+    }
+    catch (error) {
+      console.log("error", error)
+    }
+  }
   return (
     <>
       <Card
@@ -142,22 +152,22 @@ const Cards = ({ item }) => {
       >
         <img alt="card " className="cardImg" src={cardImg2} />
         <p className="cardName">#15881- {item ?.description}</p>
-    
+
         <div className="placeBid">
-    
-      
-            <div>
+
+
+          <div>
             <button className="nft-btn-2" onClick={handleOpenResellModal}>Send Periodic</button>
             <button className="nft-btn-2" onClick={ClaimOpen}
             >
               Claim Nft
             </button>
-            </div>
+          </div>
 
-            <br/>
-            <button className="nft-btn-2" onClick={ownerClaimOpen}
-            >
-             Owner Claim Nft
+          <br />
+          <button className="nft-btn-2" onClick={handleUnlistNft}
+          >
+            Unlist Nft
             </button>
         </div>
       </Card>
