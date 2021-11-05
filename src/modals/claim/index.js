@@ -61,18 +61,18 @@ const useStyles = makeStyles((theme) => ({
 
 const ClaimNft = ({ data }) => {
   const [{ web3, accounts, contract, colletralContract }, dispatch] = useStore();
-  let [tradeId, settradeId] = useState("");
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
+  let tradeId = data.nfT_collateral_id
 
   const onSubmit = async () => {
 
     try {
 
 
-      let receipt = await claimNftAsync(colletralContract, accounts, 6
+      let receipt = await claimNftAsync(colletralContract, accounts, tradeId
       )
 
 
@@ -94,9 +94,7 @@ const ClaimNft = ({ data }) => {
         <div style={modalStyle} className={classes.paper}>
           <h1 style={{ color: "black" }}>Claim Nft </h1>
  
-          <TextField type="text"
-            className="text-field" placeholder="Amount" label="Enter trade id" type="text" value={tradeId} onChange={(e) => settradeId(e.target.value)}
-          />
+
           <button className="buy-btn" onClick={onSubmit}
           >
             Claim

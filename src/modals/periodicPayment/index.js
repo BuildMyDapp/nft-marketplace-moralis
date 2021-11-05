@@ -62,8 +62,6 @@ const useStyles = makeStyles((theme) => ({
 const SentPeriodicPayment = ({ data, handleCloseResellModal }) => {
   const [{ web3, accounts, contract, colletralContract }, dispatch] = useStore();
   let [etherAmount, setEtheAmount] = useState("");
-  let [tradeId, settradeId] = useState("");
-  let [currencyAddress, setcurrencyAddress] = useState("");
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
@@ -73,6 +71,9 @@ const SentPeriodicPayment = ({ data, handleCloseResellModal }) => {
   }, []);
 
   const onSubmit = async () => {
+    let currencyAddress = data.currency_address;
+    let tradeId = data.nfT_collateral_id
+  
     // let price = etherAmount * 10e17
     let price = web3.utils.toWei(etherAmount, 'ether');
 
@@ -114,12 +115,6 @@ const SentPeriodicPayment = ({ data, handleCloseResellModal }) => {
 
           <TextField type="number"
             className="text-field" placeholder="Amount" label="Enter Amount" type="number" value={etherAmount} onChange={(e) => setEtheAmount(e.target.value)}
-          />
-          <TextField type="text"
-            className="text-field" placeholder="currencyAddress" label="Enter currencyAddress" type="text" value={currencyAddress} onChange={(e) => setcurrencyAddress(e.target.value)}
-          />
-          <TextField type="text"
-            className="text-field" placeholder="Amount" label="Enter trade id" type="text" value={tradeId} onChange={(e) => settradeId(e.target.value)}
           />
           <button className="buy-btn" onClick={onSubmit}
           >

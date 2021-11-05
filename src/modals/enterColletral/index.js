@@ -87,8 +87,8 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
     console.log("onSubmitcolletralContract", colletralContract.methods)
     try {
 
-      let nfT_colletral_id = await colletralContract.methods.tradeCounter().call();
-      console.log("nfT_colletral_id", nfT_colletral_id)
+      let nfT_collateral_id = await colletralContract.methods.tradeCounter().call();
+      console.log("nfT_collateral_id", nfT_collateral_id)
 
       let receipt = await liftNftColetralAsync(colletralContract, accounts, price, paymentPeriod,
         downPaymentPeriod, duration, currencyAddress, data)
@@ -108,7 +108,7 @@ const EnterColletral = ({ data, handleCloseResellModal }) => {
         headers: myHeaders,
         body: JSON.stringify({
           name, token_address, token_id,
-          payment_period, down_payment_period, duration, price, owner_address, nfT_colletral_id,
+          payment_period, down_payment_period, duration, price, owner_address, nfT_collateral_id,
           currency_address
         })
       };

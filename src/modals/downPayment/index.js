@@ -73,7 +73,7 @@ const EnterDownPayment = ({ data, handleCloseResellModal }) => {
     // loadBlockchain(dispatch);
   }, []);
   let currencyAddress = data.currency_address;
-  let tradeId = data.nfT_colletral_id
+  let tradeId = data.nfT_collateral_id
 
   console.log("data", data)
 
