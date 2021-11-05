@@ -126,10 +126,10 @@ const Cards = ({ item }) => {
 
         <div className="placeBid">
         
-        
+{/*         
           <div>
             <button className="nft-btn" onClick={handleApprove}>Approve</button>
-          </div>
+          </div> */}
 
           <div>
             <button className="nft-btn" onClick={handleOpenResellModal}>NFT collateral</button>

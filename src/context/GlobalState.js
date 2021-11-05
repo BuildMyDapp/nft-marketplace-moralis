@@ -11,7 +11,8 @@ const initialState = {
     contract: null,
     apiTrigger: false,
     colletralContract: null,
-    apiUrl: "http://localhost:8080/",
+    // apiUrl: "http://localhost:8080/",
+    apiUrl: "https://collateral.buildmydapp.co/",
     web3LoadingErrorMessage: "http://localhost:8080/",
     web3Loadded: false
 }
